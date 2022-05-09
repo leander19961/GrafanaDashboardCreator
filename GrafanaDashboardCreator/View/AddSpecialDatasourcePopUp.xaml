@@ -1,0 +1,19 @@
+﻿<Window x:Class="GrafanaDashboardCreator.View.AddSpecialDatasourcePopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafanaDashboardCreator.View"
+        mc:Ignorable="d"
+        Title="AddSpecialDatasourcePopUp" Height="250" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Label Content="Select Node:" HorizontalAlignment="Center" Margin="0,0,250,50" VerticalAlignment="Center"/>
+        <Label Content="Select a node and specifie the type of the new datasource" HorizontalAlignment="Center" Margin="0,0,0,150" VerticalAlignment="Center"/>
+        <ComboBox x:Name="SelectNodeBox" HorizontalAlignment="Center" Margin="100,0,0,50" VerticalAlignment="Center" Width="200"/>
+        <Label Content="Enter ResourceID:" HorizontalAlignment="Center" Margin="0,0,250,0" VerticalAlignment="Center"/>
+        <Button Content="Add new datasource" HorizontalAlignment="Center" Margin="180,150,0,0" VerticalAlignment="Center" Width="120" Click="AddSpecialDataSourceButton_OnCLick"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Center" Margin="0,150,175,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" KeyDown="NameTextBox_KeyDown"/>
+        <Label Content="Enter name of new datasource:" HorizontalAlignment="Center" Margin="0,100,175,0" VerticalAlignment="Center"/>
+        <TextBox x:Name="ResourceIDTextBox" HorizontalAlignment="Center" Margin="100,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="200"/>
+    </Grid>
+</Window>
