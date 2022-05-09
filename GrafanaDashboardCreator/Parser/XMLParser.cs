@@ -9,6 +9,7 @@ using System.IO;
 using GrafanaDashboardCreator.Model;
 
 using static GrafanaDashboardCreator.Resource.Constants;
+using GrafanaDashboardCreator.View;
 
 namespace GrafanaDashboardCreator.Parser
 {
@@ -22,9 +23,11 @@ namespace GrafanaDashboardCreator.Parser
             return resources;
         }
 
-        internal static void GetResourcesFromXML(ModelService modelService)
+        internal static void GetResourcesFromXML(ModelService modelService, string resourcesXML)
         {
-            XmlDocument resources = GetXMLDocumentFromFile(ResourcesXmlFilePath);
+            //XmlDocument resources = GetXMLDocumentFromFile(ResourcesXmlFilePath);
+            XmlDocument resources = new XmlDocument();
+            resources.LoadXml(resourcesXML);
             XmlNode node = resources.SelectSingleNode("resource");
             XmlNode internalResources = node.SelectSingleNode("children");
 
@@ -52,19 +55,32 @@ namespace GrafanaDashboardCreator.Parser
             modelService.SortDataSources();
         }
 
-        internal static void GetNodesFromXML(ModelService modelService)
+        internal static void GetNodesFromXML(ModelService modelService, string nodesXML)
         {
-            XmlDocument nodes = GetXMLDocumentFromFile(NodeXmlFilePath);
-            XmlNode internalNodes = nodes.SelectSingleNode("nodes");
-
-            foreach (XmlNode node in internalNodes.ChildNodes)
+            try
             {
-                string label = node.Attributes.GetNamedItem("label").Value;
-                string nodeID = node.Attributes.GetNamedItem("id").Value;
-                string nodeForeignID = node.Attributes.GetNamedItem("foreignId").Value;
-                string nodeForeignSource = node.Attributes.GetNamedItem("foreignSource").Value;
+                XmlDocument nodes = new XmlDocument();
+                nodes.LoadXml(nodesXML);
+                XmlNode internalNodes = nodes.SelectSingleNode("nodes");
 
-                modelService.CreateNode(label, nodeID, nodeForeignID, nodeForeignSource);
+                foreach (XmlNode node in internalNodes.ChildNodes)
+                {
+                    string label = node.Attributes.GetNamedItem("label").Value;
+                    string nodeID = node.Attributes.GetNamedItem("id").Value;
+                    string nodeForeignID = node.Attributes.GetNamedItem("foreignId").Value;
+                    string nodeForeignSource = node.Attributes.GetNamedItem("foreignSource").Value;
+
+                    modelService.CreateNode(label, nodeID, nodeForeignID, nodeForeignSource);
+                }
+            }
+            catch (Exception e)
+            {
+                JSONViewer viewer = new JSONViewer(e.ToString())
+                {
+                    Owner = App.Current.MainWindow
+                };
+
+                viewer.Show();
             }
         }
 

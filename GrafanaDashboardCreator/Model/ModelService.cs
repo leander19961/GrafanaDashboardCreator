@@ -11,6 +11,7 @@ using System.Windows.Controls;
 
 using static GrafanaDashboardCreator.Resource.SettingsIO;
 using static GrafanaDashboardCreator.Resource.Constants;
+using GrafanaDashboardCreator.Net;
 
 namespace GrafanaDashboardCreator.Model
 {
@@ -22,8 +23,6 @@ namespace GrafanaDashboardCreator.Model
         private List<Template> templates;
         private List<Node> nodes;
 
-        private List<string> specialDatasourceResourceIDs = new List<string>{ SpecialResourceIDCPU, SpecialResourceIDMemory };
-
         public ModelService()
         {
             rows = new List<Row>();
@@ -31,8 +30,6 @@ namespace GrafanaDashboardCreator.Model
             dashboards = new List<Dashboard>();
             datasources = new List<Datasource>();
             templates = LoadTemplates();
-            
-            XMLParser.GetNodesFromXML(this);
         }
 
         public ObservableList<Dashboard> GetDashboards()
@@ -126,11 +123,6 @@ namespace GrafanaDashboardCreator.Model
             return nodeList;
         }
 
-        public List<string> GetResourceIDStrings()
-        {
-            return specialDatasourceResourceIDs;
-        }
-
         public Dashboard CreateDashboard(string name, TabItem tabItem, TabControl tabControl)
         {
             Dashboard newDashBoard = new Dashboard(name, tabItem, tabControl);
@@ -142,6 +134,14 @@ namespace GrafanaDashboardCreator.Model
 
         public Node CreateNode(string label, string nodeID, string nodeForeignID, string nodeForeignSource)
         {
+            foreach (Node node in nodes)
+            {
+                if (node.NodeForeignID == nodeForeignID && node.NodeForeignSource == nodeForeignSource)
+                {
+                    return node;
+                }
+            }
+
             Node newNode = new Node(label, nodeID, nodeForeignID, nodeForeignSource);
 
             nodes.Add(newNode);
@@ -206,7 +206,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Dashboard GetDashboardByTabItem(TabItem selectedTab)
         {
-            foreach(Dashboard dashboard in dashboards)
+            foreach (Dashboard dashboard in dashboards)
             {
                 if (dashboard.LinkedTabItem == selectedTab) { return dashboard; }
             }

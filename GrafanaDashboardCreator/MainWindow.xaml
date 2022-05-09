@@ -33,7 +33,7 @@
             <Button Content="Remove Dashboard" HorizontalAlignment="Right" Margin="0,0,455,42" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveSelectedDashboardButton_OnCLick"/>
             <Button Content="Remove Row" HorizontalAlignment="Right" Margin="0,0,455,61" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveSelectedRowButton_OnCLick"/>
             <Button Content="Create JSON Output" HorizontalAlignment="Right" Margin="0,0,455,80" VerticalAlignment="Bottom" Click="CreateExportJSONButton_OnClick" Height="20" Width="205"/>
-            
+
             <Button Content="Set Template For Datasource" HorizontalAlignment="Right" Margin="0,0,240,23" VerticalAlignment="Bottom" Click="SetTemplateForDatasourceButton_OnCLick" Height="20" Width="205"/>
             <Button Content="Rename Selected Dashboard" HorizontalAlignment="Right" Margin="0,0,240,42" VerticalAlignment="Bottom" Click="RenameSelectedDashboardButton_OnClick" Height="20" Width="205"/>
             <Button Content="Rename Selected Row" HorizontalAlignment="Right" Margin="0,0,240,61" VerticalAlignment="Bottom" Click="RenameSelectedRowButton_OnClick" Height="20" Width="205"/>

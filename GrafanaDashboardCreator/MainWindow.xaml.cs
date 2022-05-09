@@ -1,4 +1,5 @@
 ﻿using GrafanaDashboardCreator.Model;
+using GrafanaDashboardCreator.Net;
 using GrafanaDashboardCreator.Parser;
 using GrafanaDashboardCreator.Resource;
 using GrafanaDashboardCreator.View;
@@ -41,14 +42,50 @@ namespace GrafanaDashboardCreator
 
         private void GetDatasourcesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(Constants.SNMPXmlFilePath))
+            try
             {
-                //TODO
-                return;
-            }
+                XMLParser.GetNodesFromXML(modelService, RESTAPI.GETNodes());
 
-            XMLParser.GetResourcesFromXML(modelService);
-            DatasourceListView.ItemsSource = modelService.GetDatasources();
+                SelectNodePopUp popUp = new SelectNodePopUp(modelService.GetNodes())
+                {
+                    Owner = this
+                };
+
+                popUp.ShowDialog();
+
+                if (!popUp.ButtonPressed || popUp.SelectedNode == null)
+                {
+                    return;
+                }
+
+                string resourcesXML = RESTAPI.GETResources(popUp.SelectedNode.NodeForeignSource + ":" + popUp.SelectedNode.NodeForeignID);
+
+                if (resourcesXML == null)
+                {
+                    resourcesXML = "Null";
+                }
+
+                /* For debugging
+                JSONViewer viewer = new JSONViewer(resourcesXML)
+                {
+                    Owner = this
+                };
+
+                viewer.Show();
+                */
+
+                XMLParser.GetResourcesFromXML(modelService, resourcesXML);
+                DatasourceListView.ItemsSource = modelService.GetDatasources();
+            }
+            catch (Exception ex)
+            {
+                JSONViewer viewer = new JSONViewer(ex.ToString())
+                {
+                    Owner = this
+                };
+
+                viewer.Show();
+            }
         }
 
         private void CreateNewDashboardButton_OnClick(object sender, RoutedEventArgs e)

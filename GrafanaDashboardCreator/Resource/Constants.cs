@@ -16,13 +16,23 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string TemplateDirectory = DataStoreDirectory + "\\Templates";
         internal static readonly string PanelTemplateDirectory = TemplateDirectory + "\\PanelTemplates";
 
-        //Constants for XML
+        //XML
         internal static readonly string NodeXmlFilePath = DataStoreDirectory + "\\nodes.xml";
         internal static readonly string SNMPXmlFilePath = DataStoreDirectory + "\\snmp.xml";
         internal static readonly string ResourcesXmlFilePath = DataStoreDirectory + "\\resources.xml";
-        //Constants for JSON
+        //JSON
         internal static readonly string DashboardJSONFilePath = DataStoreDirectory + "\\emptydashboard.json";
         internal static readonly string RowJSONFilePath = DataStoreDirectory + "\\emptyrow.json";
+
+        //Constants for REST
+        internal static readonly string RESTUsername = "admin";
+        internal static readonly string RESTPassword = "admin";
+        internal static readonly string RESTEncoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
+                                                            .GetBytes(RESTUsername + ":" + RESTPassword));
+        internal static readonly string RESTBaseURL = "http://nms.dc.gls/opennms/rest";
+        internal static readonly string RESTGETNodeURL = RESTBaseURL + "/nodes?limit=0";
+        internal static readonly string RESTGETResourcesURL = RESTBaseURL + "/resources/fornode/§NodeID§";
+        internal static readonly string RESTGETSNMPURL = RESTBaseURL + "/nodes/§NodeID§/snmpinterfaces?limit=0";
 
         //Constants for JSONParse
         //Dashboard
@@ -53,14 +63,6 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string JSONGridPosPropertyH = "h";
 
         //ReplacePattern
-        internal static readonly string ReplacePatternMemory = "§MEMORYTYPE§";
-
-        //Special Datasource ResourceIDs
-        internal static readonly string SpecialResourceIDCPU = "nodeSnmp[]";
-        internal static readonly string SpecialResourceIDMemory = "hrStorageIndex[" + ReplacePatternMemory + "]";
-
-        //ReplaceStrings
-        internal static readonly string ReplaceStringMemoryPhys = "Physicalmemory";
-        internal static readonly string ReplaceStringMemoryVirt = "Virtualmemory";
+        internal static readonly string ReplacePatternRESTNodeID = "§NodeID§";
     }
 }

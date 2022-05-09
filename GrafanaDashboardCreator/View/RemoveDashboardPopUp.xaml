@@ -8,7 +8,7 @@
         Title="RemoveDashboardPopUp" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Label Content="Select dashboard" HorizontalAlignment="Center" Margin="0,0,0,75" VerticalAlignment="Center"/>
-        <Button x:Name="RemoveDashboard" Content="Remove Slected Dashboard" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Center" Click="RemoveDashboard_Click"/>
+        <Button x:Name="RemoveDashboard" Content="Remove Selected Dashboard" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Center" Click="RemoveDashboard_Click"/>
         <ComboBox x:Name="DashboardSelectBox" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120"/>
     </Grid>
 </Window>
