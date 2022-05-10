@@ -25,34 +25,46 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static void GetResourcesFromXML(ModelService modelService, string resourcesXML)
         {
-            //XmlDocument resources = GetXMLDocumentFromFile(ResourcesXmlFilePath);
-            XmlDocument resources = new XmlDocument();
-            resources.LoadXml(resourcesXML);
-            XmlNode node = resources.SelectSingleNode("resource");
-            XmlNode internalResources = node.SelectSingleNode("children");
-
-            char[] seperators = { '.' };
-
-            string nodeID = GetNodeID(internalResources);
-            string nodeName = node.Attributes.GetNamedItem("name").Value;
-            string nodeLabel = node.Attributes.GetNamedItem("label").Value;
-
-            foreach (XmlNode resource in internalResources.ChildNodes)
+            try
             {
-                if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Node Data")
-                {
+                XmlDocument resources = new XmlDocument();
+                resources.LoadXml(resourcesXML);
+                XmlNode node = resources.SelectSingleNode("resource");
+                XmlNode internalResources = node.SelectSingleNode("children");
 
-                }
-                else
-                {
-                    string label = resource.Attributes.GetNamedItem("label").Value;
-                    string resourceID = resource.Attributes.GetNamedItem("id").Value.Split(seperators, 2)[1];
+                char[] seperators = { '.' };
 
-                    modelService.CreateDatasource(label, resourceID, modelService.GetSpecificNodeByName(nodeLabel, nodeName, nodeID));
+                string nodeID = GetNodeID(internalResources);
+                string nodeName = node.Attributes.GetNamedItem("name").Value;
+                string nodeLabel = node.Attributes.GetNamedItem("label").Value;
+
+                foreach (XmlNode resource in internalResources.ChildNodes)
+                {
+                    if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Node Data")
+                    {
+
+                    }
+                    else
+                    {
+                        string label = resource.Attributes.GetNamedItem("label").Value;
+                        string resourceID = resource.Attributes.GetNamedItem("id").Value.Split(seperators, 2)[1];
+
+                        modelService.CreateDatasource(label, resourceID, modelService.GetSpecificNodeByName(nodeLabel, nodeName, nodeID));
+                    }
                 }
+
+                modelService.SortDataSources();
             }
+            catch (Exception e)
+            {
+                JSONViewer viewer = new JSONViewer(e.ToString())
+                {
+                    Title = "Error!",
+                    Owner = App.Current.MainWindow
+                };
 
-            modelService.SortDataSources();
+                viewer.Show();
+            }
         }
 
         internal static void GetNodesFromXML(ModelService modelService, string nodesXML)
@@ -77,6 +89,7 @@ namespace GrafanaDashboardCreator.Parser
             {
                 JSONViewer viewer = new JSONViewer(e.ToString())
                 {
+                    Title = "Error!",
                     Owner = App.Current.MainWindow
                 };
 
@@ -86,20 +99,33 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static string GetNodeID(XmlNode resources)
         {
-            foreach (XmlNode resource in resources.ChildNodes)
+            try
             {
-                if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Interface Data")
+                foreach (XmlNode resource in resources.ChildNodes)
                 {
-                    XmlNode externalValueAttributes = resource.SelectSingleNode("externalValueAttributes");
-
-                    foreach (XmlNode entry in externalValueAttributes.ChildNodes)
+                    if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Interface Data")
                     {
-                        if (entry.SelectSingleNode("key").InnerText == "nodeId")
+                        XmlNode externalValueAttributes = resource.SelectSingleNode("externalValueAttributes");
+
+                        foreach (XmlNode entry in externalValueAttributes.ChildNodes)
                         {
-                            return entry.SelectSingleNode("value").InnerText;
+                            if (entry.SelectSingleNode("key").InnerText == "nodeId")
+                            {
+                                return entry.SelectSingleNode("value").InnerText;
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                JSONViewer viewer = new JSONViewer(e.ToString())
+                {
+                    Title = "Error!",
+                    Owner = App.Current.MainWindow
+                };
+
+                viewer.Show();
             }
 
             return null;
