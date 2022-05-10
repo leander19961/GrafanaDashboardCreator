@@ -12,17 +12,17 @@ namespace GrafanaDashboardCreator.Resource
     {
         //Constants for IO
         internal static readonly string ProgramDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        internal static readonly string DataStoreDirectory = ProgramDirectory + "\\datastore";
-        internal static readonly string TemplateDirectory = DataStoreDirectory + "\\Templates";
-        internal static readonly string PanelTemplateDirectory = TemplateDirectory + "\\PanelTemplates";
+        internal static readonly string DataStoreDirectory = Path.Combine(ProgramDirectory + "\\datastore");
+        internal static readonly string TemplateDirectory = Path.Combine(DataStoreDirectory + "\\Templates");
+        internal static readonly string PanelTemplateDirectory = Path.Combine(TemplateDirectory + "\\PanelTemplates");
 
         //XML
-        internal static readonly string NodeXmlFilePath = DataStoreDirectory + "\\nodes.xml";
-        internal static readonly string SNMPXmlFilePath = DataStoreDirectory + "\\snmp.xml";
-        internal static readonly string ResourcesXmlFilePath = DataStoreDirectory + "\\resources.xml";
+        internal static readonly string NodeXmlFilePath = Path.Combine(DataStoreDirectory + "\\nodes.xml");
+        internal static readonly string SNMPXmlFilePath = Path.Combine(DataStoreDirectory + "\\snmp.xml");
+        internal static readonly string ResourcesXmlFilePath = Path.Combine(DataStoreDirectory + "\\resources.xml");
         //JSON
-        internal static readonly string DashboardJSONFilePath = DataStoreDirectory + "\\emptydashboard.json";
-        internal static readonly string RowJSONFilePath = DataStoreDirectory + "\\emptyrow.json";
+        internal static readonly string DashboardJSONFilePath = Path.Combine(TemplateDirectory + "\\emptydashboard.json");
+        internal static readonly string RowJSONFilePath = Path.Combine(TemplateDirectory + "\\emptyrow.json");
 
         //Constants for REST
         //OpenNMS
@@ -70,5 +70,9 @@ namespace GrafanaDashboardCreator.Resource
 
         //ReplacePattern
         internal static readonly string ReplacePatternRESTNodeID = "§NodeID§";
+
+        //JSONTemplates
+        internal static readonly string EmptyRowJSON = "{  \"collapsed\": true,  \"datasource\": null,  \"gridPos\": {    \"h\": 1,    \"w\": 24,    \"x\": 0,    \"y\": 0  },  \"id\": 4,  \"panels\": [],  \"title\": \"\",  \"type\": \"row\"}";
+        internal static readonly string EmptyDashboardJSON = "{  \"annotations\": {    \"list\": [      {        \"builtIn\": 1,        \"datasource\": \"-- Grafana --\",        \"enable\": true,        \"hide\": true,        \"iconColor\": \"rgba(0, 211, 255, 1)\",        \"name\": \"Annotations & Alerts\",        \"type\": \"dashboard\"      }    ]  },  \"editable\": true,  \"gnetId\": null,  \"graphTooltip\": 0,  \"id\": null,  \"links\": [],  \"panels\": [],  \"schemaVersion\": 27,  \"style\": \"dark\",  \"tags\": [],  \"templating\": {    \"list\": []  },  \"time\": {    \"from\": \"now-6h\",    \"to\": \"now\"  },  \"timepicker\": {},  \"timezone\": \"\",  \"title\": \"testdashboard\",  \"uid\": null,  \"version\": 0}";
     }
 }

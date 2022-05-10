@@ -23,28 +23,21 @@ namespace GrafanaDashboardCreator.Resource
                 Directory.CreateDirectory(DataStoreDirectory);
             }
 
-            if (!File.Exists(NodeXmlFilePath))
+            if (!Directory.Exists(PanelTemplateDirectory))
             {
-                XmlDocument emptyxml = new XmlDocument();
-                emptyxml.Save(NodeXmlFilePath);
-            }
-
-            if (!File.Exists(SNMPXmlFilePath))
-            {
-                XmlDocument emptyxml = new XmlDocument();
-                emptyxml.Save(SNMPXmlFilePath);
+                Directory.CreateDirectory(PanelTemplateDirectory);
             }
 
             if (!File.Exists(DashboardJSONFilePath))
             {
-                JObject emptyJson = new JObject();
-                File.WriteAllText(DashboardJSONFilePath, emptyJson.ToString());
+                JObject emptyDashbooardJSON = JObject.Parse(EmptyDashboardJSON);
+                File.WriteAllText(DashboardJSONFilePath, emptyDashbooardJSON.ToString());
             }
 
             if (!File.Exists(RowJSONFilePath))
             {
-                JObject emptyJson = new JObject();
-                File.WriteAllText(RowJSONFilePath, emptyJson.ToString());
+                JObject emptyRowJSON = JObject.Parse(EmptyRowJSON);
+                File.WriteAllText(RowJSONFilePath, emptyRowJSON.ToString());
             }
         }
 
