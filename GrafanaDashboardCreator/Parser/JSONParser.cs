@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GrafanaDashboardCreator.Helper;
 using GrafanaDashboardCreator.Model;
+using GrafanaDashboardCreator.View;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -35,163 +36,23 @@ namespace GrafanaDashboardCreator.Parser
             //Start with dashboard-template
             JObject dashboardJSON = JObject.Parse(dashboardJSONstring);
 
-            //Setting dashboard properties
-            foreach (JProperty dashboardProperty in dashboardJSON.Properties())
+            try
             {
-                if (dashboardProperty.Name.Equals(JSONPanelTitlePropertyName))
+                //Setting dashboard properties
+                foreach (JProperty dashboardProperty in dashboardJSON.Properties())
                 {
-                    dashboardProperty.Value = dashboard.Name;
-                }
-
-                //Adding panels to the panels[] from dashboard-template
-                if (dashboardProperty.Name.Equals(JSONDashboardPanelsPropertyName))
-                {
-                    JArray dashboardPanels = dashboardProperty.Value as JArray;
-
-                    //Adding free-space panels
-                    foreach (Datasource datasource in dashboard.GetFreeSpaceRow().Datasources)
+                    if (dashboardProperty.Name.Equals(JSONPanelTitlePropertyName))
                     {
-                        JObject panelJSON = JObject.Parse(datasource.Template.JSONtext);
-
-                        //Setting panel properties
-                        foreach (JProperty panelProperty in panelJSON.Properties())
-                        {
-                            //Panel ID
-                            if (panelProperty.Name.Equals(JSONPanelIDPropertyName))
-                            {
-                                panelProperty.Value = id;
-                                id++;
-                            }
-
-                            //Panel Title
-                            if (panelProperty.Name.Equals(JSONPanelTitlePropertyName))
-                            {
-                                panelProperty.Value = datasource.Label;
-                            }
-
-                            //Panel Position
-                            if (panelProperty.Name.Equals(JSONRowGridPosPropertyName))
-                            {
-                                JObject gridJSON = panelProperty.Value as JObject;
-
-                                foreach (JProperty gridProperty in gridJSON.Properties())
-                                {
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyX))
-                                    {
-                                        gridProperty.Value = gridPos.X;
-                                    }
-
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyY))
-                                    {
-                                        gridProperty.Value = gridPos.Y;
-                                    }
-
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyW))
-                                    {
-                                        gridIncrementForX = int.Parse(gridProperty.Value.ToString());
-                                    }
-
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyH))
-                                    {
-                                        gridIncrementForY = int.Parse(gridProperty.Value.ToString());
-                                    }
-                                }
-
-                                gridPos.IncrementGridPos(gridIncrementForX, gridIncrementForY);
-                            }
-
-                            //Panel Target
-                            if (panelProperty.Name.Equals(JSONPanelTargetsPropertyName))
-                            {
-                                foreach (JObject targets in (JArray)panelProperty.Value)
-                                {
-                                    foreach (JProperty target_property in targets.Properties())
-                                    {
-                                        if (target_property.Name.Equals(JSONPanelResourceIDPropertyName))
-                                        {
-                                            if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && datasource.Template.ReplaceResourceID)
-                                            {
-                                                target_property.Value = datasource.ResourceID;
-                                            }
-
-                                            if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && datasource.Template.ReplaceNodeID)
-                                            {
-                                                target_property.Value = datasource.NodeID;
-                                            }
-                                        }
-
-                                        if (target_property.Name.Equals(JSONPanelNodeIDPropertyName))
-                                        {
-                                            target_property.Value = datasource.NodeID;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        dashboardPanels.Add(panelJSON);
+                        dashboardProperty.Value = dashboard.Name;
                     }
 
-                    //Adding rows
-                    foreach (Row row in dashboard.GetRowsWithoutFreeSpace())
+                    //Adding panels to the panels[] from dashboard-template
+                    if (dashboardProperty.Name.Equals(JSONDashboardPanelsPropertyName))
                     {
-                        string rowJSONstring;
-                        using (StreamReader r = new StreamReader(RowJSONFilePath))
-                        {
-                            rowJSONstring = r.ReadToEnd();
-                        }
+                        JArray dashboardPanels = dashboardProperty.Value as JArray;
 
-                        JObject rowJSON = JObject.Parse(rowJSONstring);
-
-                        //Setting row properties
-                        foreach (JProperty rowProperty in rowJSON.Properties())
-                        {
-                            //Row ID
-                            if (rowProperty.Name.Equals(JSONRowIDPropertyName))
-                            {
-                                rowProperty.Value = id;
-                                id++;
-                            }
-
-                            //Row Title
-                            if (rowProperty.Name.Equals(JSONRowTitlePropertyName))
-                            {
-                                rowProperty.Value = row.Name;
-                            }
-
-                            //Row Position
-                            if (rowProperty.Name.Equals(JSONRowGridPosPropertyName))
-                            {
-                                JObject gridJSON = rowProperty.Value as JObject;
-
-                                gridPos.NewRow(gridIncrementForY);
-
-                                foreach (JProperty gridProperty in gridJSON.Properties())
-                                {
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyX))
-                                    {
-                                        gridProperty.Value = gridPos.X;
-                                    }
-
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyY))
-                                    {
-                                        gridProperty.Value = gridPos.Y;
-                                    }
-
-                                    if (gridProperty.Name.Equals(JSONGridPosPropertyW))
-                                    {
-                                        gridIncrementForX = int.Parse(gridProperty.Value.ToString());
-                                    }
-                                }
-
-                                gridPos.NewRowInner();
-                            }
-                        }
-
-                        dashboardPanels.Add(rowJSON);
-
-                        //Adding panels to the row
-                        foreach (Datasource datasource in row.Datasources)
+                        //Adding free-space panels
+                        foreach (Datasource datasource in dashboard.GetFreeSpaceRow().Datasources)
                         {
                             JObject panelJSON = JObject.Parse(datasource.Template.JSONtext);
 
@@ -249,12 +110,20 @@ namespace GrafanaDashboardCreator.Parser
                                     {
                                         foreach (JProperty target_property in targets.Properties())
                                         {
-                                            if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && datasource.Template.ReplaceResourceID)
+                                            if (target_property.Name.Equals(JSONPanelResourceIDPropertyName))
                                             {
-                                                target_property.Value = datasource.ResourceID;
+                                                if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && datasource.Template.ReplaceResourceID)
+                                                {
+                                                    target_property.Value = datasource.ResourceID;
+                                                }
+
+                                                if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && datasource.Template.ReplaceNodeID)
+                                                {
+                                                    target_property.Value = datasource.NodeID;
+                                                }
                                             }
 
-                                            if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && datasource.Template.ReplaceNodeID)
+                                            if (target_property.Name.Equals(JSONPanelNodeIDPropertyName))
                                             {
                                                 target_property.Value = datasource.NodeID;
                                             }
@@ -262,10 +131,155 @@ namespace GrafanaDashboardCreator.Parser
                                     }
                                 }
                             }
+
                             dashboardPanels.Add(panelJSON);
+                        }
+
+                        //Adding rows
+                        foreach (Row row in dashboard.GetRowsWithoutFreeSpace())
+                        {
+                            string rowJSONstring;
+                            using (StreamReader r = new StreamReader(RowJSONFilePath))
+                            {
+                                rowJSONstring = r.ReadToEnd();
+                            }
+
+                            JObject rowJSON = JObject.Parse(rowJSONstring);
+
+                            //Setting row properties
+                            foreach (JProperty rowProperty in rowJSON.Properties())
+                            {
+                                //Row ID
+                                if (rowProperty.Name.Equals(JSONRowIDPropertyName))
+                                {
+                                    rowProperty.Value = id;
+                                    id++;
+                                }
+
+                                //Row Title
+                                if (rowProperty.Name.Equals(JSONRowTitlePropertyName))
+                                {
+                                    rowProperty.Value = row.Name;
+                                }
+
+                                //Row Position
+                                if (rowProperty.Name.Equals(JSONRowGridPosPropertyName))
+                                {
+                                    JObject gridJSON = rowProperty.Value as JObject;
+
+                                    gridPos.NewRow(gridIncrementForY);
+
+                                    foreach (JProperty gridProperty in gridJSON.Properties())
+                                    {
+                                        if (gridProperty.Name.Equals(JSONGridPosPropertyX))
+                                        {
+                                            gridProperty.Value = gridPos.X;
+                                        }
+
+                                        if (gridProperty.Name.Equals(JSONGridPosPropertyY))
+                                        {
+                                            gridProperty.Value = gridPos.Y;
+                                        }
+
+                                        if (gridProperty.Name.Equals(JSONGridPosPropertyW))
+                                        {
+                                            gridIncrementForX = int.Parse(gridProperty.Value.ToString());
+                                        }
+                                    }
+
+                                    gridPos.NewRowInner();
+                                }
+                            }
+
+                            dashboardPanels.Add(rowJSON);
+
+                            //Adding panels to the row
+                            foreach (Datasource datasource in row.Datasources)
+                            {
+                                JObject panelJSON = JObject.Parse(datasource.Template.JSONtext);
+
+                                //Setting panel properties
+                                foreach (JProperty panelProperty in panelJSON.Properties())
+                                {
+                                    //Panel ID
+                                    if (panelProperty.Name.Equals(JSONPanelIDPropertyName))
+                                    {
+                                        panelProperty.Value = id;
+                                        id++;
+                                    }
+
+                                    //Panel Title
+                                    if (panelProperty.Name.Equals(JSONPanelTitlePropertyName))
+                                    {
+                                        panelProperty.Value = datasource.Label;
+                                    }
+
+                                    //Panel Position
+                                    if (panelProperty.Name.Equals(JSONRowGridPosPropertyName))
+                                    {
+                                        JObject gridJSON = panelProperty.Value as JObject;
+
+                                        foreach (JProperty gridProperty in gridJSON.Properties())
+                                        {
+                                            if (gridProperty.Name.Equals(JSONGridPosPropertyX))
+                                            {
+                                                gridProperty.Value = gridPos.X;
+                                            }
+
+                                            if (gridProperty.Name.Equals(JSONGridPosPropertyY))
+                                            {
+                                                gridProperty.Value = gridPos.Y;
+                                            }
+
+                                            if (gridProperty.Name.Equals(JSONGridPosPropertyW))
+                                            {
+                                                gridIncrementForX = int.Parse(gridProperty.Value.ToString());
+                                            }
+
+                                            if (gridProperty.Name.Equals(JSONGridPosPropertyH))
+                                            {
+                                                gridIncrementForY = int.Parse(gridProperty.Value.ToString());
+                                            }
+                                        }
+
+                                        gridPos.IncrementGridPos(gridIncrementForX, gridIncrementForY);
+                                    }
+
+                                    //Panel Target
+                                    if (panelProperty.Name.Equals(JSONPanelTargetsPropertyName))
+                                    {
+                                        foreach (JObject targets in (JArray)panelProperty.Value)
+                                        {
+                                            foreach (JProperty target_property in targets.Properties())
+                                            {
+                                                if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && datasource.Template.ReplaceResourceID)
+                                                {
+                                                    target_property.Value = datasource.ResourceID;
+                                                }
+
+                                                if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && datasource.Template.ReplaceNodeID)
+                                                {
+                                                    target_property.Value = datasource.NodeID;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                dashboardPanels.Add(panelJSON);
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
+                {
+                    Title = "Error!",
+                    Owner = App.Current.MainWindow
+                };
+
+                viewer.Show();
             }
 
             return dashboardJSON;
@@ -283,57 +297,60 @@ namespace GrafanaDashboardCreator.Parser
             JObject inputJSON = JObject.Parse(inputJSONString);
             JObject newTemplate = null;
 
-            //Properties in dashboard
-            foreach (JProperty property in inputJSON.Properties())
+            try
             {
-                //Panels[] in dashboard
-                if (property.Name.Equals(JSONDashboardPanelsPropertyName))
+                //Properties in dashboard
+                foreach (JProperty property in inputJSON.Properties())
                 {
-                    //JObjects in Panels[] from dashboard
-                    JArray dashboardPanels = JArray.Parse(property.Value.ToString());
-                    foreach (JObject row_or_panel in dashboardPanels.Children())
+                    //Panels[] in dashboard
+                    if (property.Name.Equals(JSONDashboardPanelsPropertyName))
                     {
-                        //Properties in JObjects..
-                        foreach (JProperty row_or_panel_property in row_or_panel.Properties())
+                        //JObjects in Panels[] from dashboard
+                        JArray dashboardPanels = JArray.Parse(property.Value.ToString());
+                        foreach (JObject row_or_panel in dashboardPanels.Children())
                         {
-                            //Panel in Panels[] from dashboard
-                            if (row_or_panel_property.Name.Equals(JSONPanelTypePropertyName) && row_or_panel_property.Value.ToString().Equals(JSONPanelTypePropertyValue))
+                            //Properties in JObjects..
+                            foreach (JProperty row_or_panel_property in row_or_panel.Properties())
                             {
-                                foreach (JProperty panel_property in row_or_panel.Properties())
+                                //Panel in Panels[] from dashboard
+                                if (row_or_panel_property.Name.Equals(JSONPanelTypePropertyName) && row_or_panel_property.Value.ToString().Equals(JSONPanelTypePropertyValue))
                                 {
-                                    //Panel with given title in Panels[] from dashboard (free space)
-                                    if (panel_property.Name.Equals(JSONDashboardTitlePropertyName) && panel_property.Value.ToString().Equals(templateTitle))
+                                    foreach (JProperty panel_property in row_or_panel.Properties())
                                     {
-                                        newTemplate = row_or_panel;
+                                        //Panel with given title in Panels[] from dashboard (free space)
+                                        if (panel_property.Name.Equals(JSONDashboardTitlePropertyName) && panel_property.Value.ToString().Equals(templateTitle))
+                                        {
+                                            newTemplate = row_or_panel;
+                                        }
                                     }
                                 }
-                            }
 
-                            //Row in Panels[] from dashboard
-                            if (row_or_panel_property.Name.Equals(JSONRowTypePropertyName) && row_or_panel_property.Value.ToString().Equals(JSONRowTypePropertyValue))
-                            {
-                                foreach (JProperty row_property in row_or_panel.Properties())
+                                //Row in Panels[] from dashboard
+                                if (row_or_panel_property.Name.Equals(JSONRowTypePropertyName) && row_or_panel_property.Value.ToString().Equals(JSONRowTypePropertyValue))
                                 {
-                                    //Check for panels in Panels[] from Row
-                                    if (row_property.Name.Equals(JSONRowPanelsPropertyName))
+                                    foreach (JProperty row_property in row_or_panel.Properties())
                                     {
-                                        JArray row_panels = JArray.Parse(row_property.Value.ToString());
-
-                                        if (row_panels.Count > 0)
+                                        //Check for panels in Panels[] from Row
+                                        if (row_property.Name.Equals(JSONRowPanelsPropertyName))
                                         {
-                                            foreach (JObject row_panel in row_panels)
+                                            JArray row_panels = JArray.Parse(row_property.Value.ToString());
+
+                                            if (row_panels.Count > 0)
                                             {
-                                                //Panels in Panels[] from row
-                                                foreach (JProperty row_panel_property in row_panel.Properties())
+                                                foreach (JObject row_panel in row_panels)
                                                 {
-                                                    if (row_panel_property.Name.Equals(JSONPanelTypePropertyName) && row_panel_property.Value.ToString().Equals(JSONPanelTypePropertyValue))
+                                                    //Panels in Panels[] from row
+                                                    foreach (JProperty row_panel_property in row_panel.Properties())
                                                     {
-                                                        foreach (JProperty _row_panel_property in row_panel.Properties())
+                                                        if (row_panel_property.Name.Equals(JSONPanelTypePropertyName) && row_panel_property.Value.ToString().Equals(JSONPanelTypePropertyValue))
                                                         {
-                                                            //Panel with given title in Panels[] from row
-                                                            if (_row_panel_property.Name.Equals(JSONDashboardTitlePropertyName) && _row_panel_property.Value.ToString().Equals(templateTitle))
+                                                            foreach (JProperty _row_panel_property in row_panel.Properties())
                                                             {
-                                                                newTemplate = row_panel;
+                                                                //Panel with given title in Panels[] from row
+                                                                if (_row_panel_property.Name.Equals(JSONDashboardTitlePropertyName) && _row_panel_property.Value.ToString().Equals(templateTitle))
+                                                                {
+                                                                    newTemplate = row_panel;
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -346,48 +363,58 @@ namespace GrafanaDashboardCreator.Parser
                         }
                     }
                 }
-            }
 
-            if (newTemplate == null)
-            {
-                return null; //TODO
-            }
-
-            foreach (JProperty property in newTemplate.Properties())
-            {
-                if (property.Name.Equals(JSONPanelTitlePropertyName))
+                if (newTemplate == null)
                 {
-                    property.Value = null;
-                }
-                
-                if (property.Name.Equals(JSONRowTitlePropertyName))
-                {
-                    property.Value = null;
+                    return null; //TODO
                 }
 
-                if (property.Name.Equals(JSONPanelIDPropertyName))
+                foreach (JProperty property in newTemplate.Properties())
                 {
-                    property.Value = null;
-                }
-
-                if (property.Name.Equals(JSONPanelTargetsPropertyName))
-                {
-                    foreach (JObject targets in (JArray)property.Value)
+                    if (property.Name.Equals(JSONPanelTitlePropertyName))
                     {
-                        foreach (JProperty target_property in targets.Properties())
-                        {
-                            if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && replaceResourceID)
-                            {
-                                target_property.Value = null;
-                            }
+                        property.Value = null;
+                    }
 
-                            if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && replaceNodeID)
+                    if (property.Name.Equals(JSONRowTitlePropertyName))
+                    {
+                        property.Value = null;
+                    }
+
+                    if (property.Name.Equals(JSONPanelIDPropertyName))
+                    {
+                        property.Value = null;
+                    }
+
+                    if (property.Name.Equals(JSONPanelTargetsPropertyName))
+                    {
+                        foreach (JObject targets in (JArray)property.Value)
+                        {
+                            foreach (JProperty target_property in targets.Properties())
                             {
-                                target_property.Value = null;
+                                if (target_property.Name.Equals(JSONPanelResourceIDPropertyName) && replaceResourceID)
+                                {
+                                    target_property.Value = null;
+                                }
+
+                                if (target_property.Name.Equals(JSONPanelNodeIDPropertyName) && replaceNodeID)
+                                {
+                                    target_property.Value = null;
+                                }
                             }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
+                {
+                    Title = "Error!",
+                    Owner = App.Current.MainWindow
+                };
+
+                viewer.Show();
             }
 
             return newTemplate.ToString();

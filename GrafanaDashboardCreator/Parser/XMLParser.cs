@@ -57,7 +57,7 @@ namespace GrafanaDashboardCreator.Parser
             }
             catch (Exception e)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString())
+                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
                 {
                     Title = "Error!",
                     Owner = App.Current.MainWindow
@@ -87,7 +87,7 @@ namespace GrafanaDashboardCreator.Parser
             }
             catch (Exception e)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString())
+                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
                 {
                     Title = "Error!",
                     Owner = App.Current.MainWindow
@@ -119,7 +119,7 @@ namespace GrafanaDashboardCreator.Parser
             }
             catch (Exception e)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString())
+                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
                 {
                     Title = "Error!",
                     Owner = App.Current.MainWindow
