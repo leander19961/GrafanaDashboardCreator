@@ -14,7 +14,7 @@
         <Label Content="JSONTitle:" HorizontalAlignment="Center" Margin="0,0,0,60" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
         <Label Content="PathToJSON:" HorizontalAlignment="Center" Margin="200,0,0,60" VerticalAlignment="Center"/>
         <Button Content="Find Template In File" HorizontalAlignment="Center" Margin="150,80,0,0" VerticalAlignment="Center" Click="CreateDashboardButton_OnClick"/>
-        <CheckBox x:Name="ReplaceNodeIDCheckBox" Content="ReplaceNodeID" HorizontalAlignment="Center" Margin="0,50,172,0" VerticalAlignment="Center"/>
+        <CheckBox x:Name="ReplaceNodeIDCheckBox" Content="Replace NodeID" HorizontalAlignment="Center" Margin="0,50,169,0" VerticalAlignment="Center"/>
         <CheckBox x:Name="ReplaceResourceIDCheckBox" Content="Replace ResourceID" HorizontalAlignment="Center" Margin="0,80,150,0" VerticalAlignment="Center"/>
     </Grid>
 </Window>

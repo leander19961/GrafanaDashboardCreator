@@ -67,5 +67,27 @@ namespace GrafanaDashboardCreator.View
             viewer.Owner = this;
             viewer.Show();
         }
+
+        private void GetNewTemplateButton_OnCLick(object sender, RoutedEventArgs e)
+        {
+            GetNewTemplatePopUp popUp = new GetNewTemplatePopUp
+            {
+                Owner = this
+            };
+            popUp.ShowDialog();
+
+            if (!popUp.ButtonPressed)
+            {
+                return;
+            }
+
+            string templateName = popUp.TemplateName;
+            string templateTitle = popUp.JSONTitle;
+            string pathToJSON = popUp.PathToJSON;
+            bool replaceNodeID = popUp.ReplaceNodeID;
+            bool replaceResourceID = popUp.ReplaceResourceID;
+
+            modelService.CreateTemplate(templateName, templateTitle, pathToJSON, replaceNodeID, replaceResourceID);
+        }
     }
 }

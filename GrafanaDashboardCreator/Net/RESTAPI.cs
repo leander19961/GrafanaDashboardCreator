@@ -6,8 +6,6 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using RestSharp;
-using RestSharp.Authenticators;
 
 using static GrafanaDashboardCreator.Resource.Constants;
 
@@ -20,6 +18,7 @@ namespace GrafanaDashboardCreator.Net
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGETNodeURL);
 
             httpRequest.Headers["Authorization"] = "Basic " + RESTEncoded;
+            httpRequest.Method = "GET";
 
             string result = "";
             HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
@@ -36,6 +35,7 @@ namespace GrafanaDashboardCreator.Net
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGETResourcesURL.Replace(ReplacePatternRESTNodeID, nodeID));
 
             httpRequest.Headers["Authorization"] = "Basic " + RESTEncoded;
+            httpRequest.Method = "GET";
 
             string result = "";
             HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();

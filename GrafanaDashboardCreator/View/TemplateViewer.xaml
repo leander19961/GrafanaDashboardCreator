@@ -17,8 +17,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Delete Template" HorizontalAlignment="Center" Margin="600,375,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="DeleteTemplateButton_OnClick"/>
+        <Button Content="Delete Template" HorizontalAlignment="Center" Margin="0,375,600,0" VerticalAlignment="Center" Height="20" Width="130" Click="DeleteTemplateButton_OnClick"/>
         <Button Content="Rename Template" HorizontalAlignment="Center" Margin="600,337,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="RenameTemplateButton_OnClick"/>
         <Button Content="Open JSONText Viewer" HorizontalAlignment="Center" Margin="600,298,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="ViewTemplateButton_OnClick"/>
+        <Button Content="Get New Template" HorizontalAlignment="Center" Margin="600,375,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="GetNewTemplateButton_OnCLick"/>
     </Grid>
 </Window>
