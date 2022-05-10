@@ -45,6 +45,7 @@ namespace GrafanaDashboardCreator.View
             RowSelectBox.SelectedItem = null;
             RowSelectBox.ItemsSource = null;
             RowSelectBox.ItemsSource = (DashboardSelectBox.SelectedItem as Dashboard).GetRows();
+            RowSelectBox.SelectedItem = (RowSelectBox.ItemsSource as List<Row>).First();
         }
     }
 }
