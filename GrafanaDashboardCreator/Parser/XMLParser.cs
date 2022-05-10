@@ -15,7 +15,7 @@ namespace GrafanaDashboardCreator.Parser
 {
     internal static class XMLParser
     {
-        internal static XmlDocument GetXMLDocumentFromFile(String filepath)
+        internal static XmlDocument GetXMLDocumentFromFile(string filepath)
         {
             XmlDocument resources = new XmlDocument();
             resources.Load(filepath);
