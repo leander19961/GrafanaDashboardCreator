@@ -39,10 +39,10 @@
             <Button Content="Rename Selected Row" HorizontalAlignment="Right" Margin="0,0,240,61" VerticalAlignment="Bottom" Click="RenameSelectedRowButton_OnClick" Height="20" Width="205"/>
             <Button Content="Add Special Datasource" HorizontalAlignment="Right" Margin="0,0,240,80" VerticalAlignment="Bottom" Height="20" Width="205" Click="AddSpecialDatasourceButton_OnCLick"/>
 
-            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
+            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="250,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
             <Button Content="Get New Template" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Click="GetNewTemplateButton_OnCLick" Height="20" Width="180" Visibility="Hidden"/>
-            <Button Content="Move Down Selected Datasources" HorizontalAlignment="Left" Margin="240,0,0,23" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="190"/>
-            <Button Content="Move Up Selected Datasources" HorizontalAlignment="Left" Margin="240,0,0,42" VerticalAlignment="Bottom" Height="20" Width="190" Click="MoveUpSelectedDatasources_OnClick"/>
+            <Button Content="Move Down Selected Datasources" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="190"/>
+            <Button Content="Move Up Selected Datasources" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Height="20" Width="190" Click="MoveUpSelectedDatasources_OnClick"/>
         </Grid>
     </Grid>
 </Window>

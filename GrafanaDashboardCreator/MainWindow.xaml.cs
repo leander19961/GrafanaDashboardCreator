@@ -44,7 +44,7 @@ namespace GrafanaDashboardCreator
         {
             try
             {
-                XMLParser.GetNodesFromXML(modelService, RESTAPI.GETNodes());
+                XMLParser.GetNodesFromXML(modelService, RESTAPI.GETNodesFromOpenNMS());
 
                 SelectNodePopUp popUp = new SelectNodePopUp(modelService.GetNodes())
                 {
@@ -58,7 +58,7 @@ namespace GrafanaDashboardCreator
                     return;
                 }
 
-                string resourcesXML = RESTAPI.GETResources(popUp.SelectedNode.NodeForeignSource + ":" + popUp.SelectedNode.NodeForeignID);
+                string resourcesXML = RESTAPI.GETResourcesFromOpenNMS(popUp.SelectedNode.NodeForeignSource + ":" + popUp.SelectedNode.NodeForeignID);
 
                 if (resourcesXML == null)
                 {

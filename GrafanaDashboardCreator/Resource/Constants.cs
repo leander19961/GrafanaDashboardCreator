@@ -25,14 +25,20 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string RowJSONFilePath = DataStoreDirectory + "\\emptyrow.json";
 
         //Constants for REST
-        internal static readonly string RESTUsername = "admin";
-        internal static readonly string RESTPassword = "admin";
-        internal static readonly string RESTEncoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
-                                                            .GetBytes(RESTUsername + ":" + RESTPassword));
-        internal static readonly string RESTBaseURL = "http://nms.dc.gls/opennms/rest";
-        internal static readonly string RESTGETNodeURL = RESTBaseURL + "/nodes?limit=0";
-        internal static readonly string RESTGETResourcesURL = RESTBaseURL + "/resources/fornode/§NodeID§";
-        internal static readonly string RESTGETSNMPURL = RESTBaseURL + "/nodes/§NodeID§/snmpinterfaces?limit=0";
+        //OpenNMS
+        //internal static readonly string RESTOpenNMSUsername = "admin";
+        //internal static readonly string RESTOpenNMSPassword = "admin";
+        internal static readonly string RESTOpenNMSEncoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
+                                                            .GetBytes("admin" + ":" + "admin"));
+        internal static readonly string RESTOpenNMSBaseURL = "http://nms.dc.gls/opennms/rest";
+        internal static readonly string RESTOpenNMSGETNodesURL = RESTOpenNMSBaseURL + "/nodes?limit=0";
+        internal static readonly string RESTOpenNMSGETResourcesURL = RESTOpenNMSBaseURL + "/resources/fornode/§NodeID§";
+        internal static readonly string RESTOpenNMSGETSNMPURL = RESTOpenNMSBaseURL + "/nodes/§NodeID§/snmpinterfaces?limit=0";
+        //Grafana
+        internal static readonly string RESTGrafanaToken = "";
+        internal static readonly string RESTGrafanaBaseURL = "http://grafana.dc.gls:3000/api";
+        internal static readonly string RESTGrafanaGETFoldersURL = RESTGrafanaBaseURL + "/folders?limit=0";
+        internal static readonly string RESTGrafanaPOSTDashboardURL = RESTGrafanaBaseURL + "/dashboards/db";
 
         //Constants for JSONParse
         //Dashboard
