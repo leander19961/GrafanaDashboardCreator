@@ -12,7 +12,7 @@ namespace GrafanaDashboardCreator.Model
     public class Row : INotifyPropertyChanged
     {
         private string _name;
-        private List<Datasource> datasources;
+        private List<Datasource> _datasources;
         private readonly TabItem _linkedTabItem;
         private readonly ListView _linkedListView;
         private Dashboard _dashboard;
@@ -31,7 +31,7 @@ namespace GrafanaDashboardCreator.Model
 
         public ListView LinkedListView { get { return _linkedListView; } }
 
-        public List<Datasource> Datasources { get { return datasources; } }
+        public List<Datasource> Datasources { get { return _datasources; } }
 
         public Dashboard Dashboard { get { return _dashboard; } }
 
@@ -51,7 +51,7 @@ namespace GrafanaDashboardCreator.Model
             _name = name;
             _linkedTabItem = tabItem;
             _linkedListView = listView;
-            datasources = new List<Datasource>();
+            _datasources = new List<Datasource>();
         }
 
         public Row SetDashboard(Dashboard value)
@@ -78,11 +78,11 @@ namespace GrafanaDashboardCreator.Model
 
         public Row WithDatasources(Datasource value)
         {
-            if (this.datasources == null) { this.datasources = new List<Datasource>(); }
+            if (this._datasources == null) { this._datasources = new List<Datasource>(); }
 
-            if (!this.datasources.Contains(value))
+            if (!this._datasources.Contains(value))
             {
-                this.datasources.Add(value);
+                this._datasources.Add(value);
                 value.setRow(this);
             }
 
@@ -101,7 +101,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Row WithoutDatasources(Datasource value)
         {
-            if (this.datasources != null && this.datasources.Remove(value))
+            if (this._datasources != null && this._datasources.Remove(value))
             {
                 value.setRow(null);
             }
@@ -127,9 +127,9 @@ namespace GrafanaDashboardCreator.Model
 
         internal void RemoveYou()
         {
-            if (this.datasources != null)
+            if (this._datasources != null)
             {
-                foreach (Datasource dataSource in this.datasources)
+                foreach (Datasource dataSource in this._datasources)
                 {
                     dataSource.setRow(null);
                 }

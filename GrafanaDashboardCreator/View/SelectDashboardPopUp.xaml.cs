@@ -17,34 +17,26 @@ using System.Windows.Shapes;
 namespace GrafanaDashboardCreator.View
 {
     /// <summary>
-    /// Interaktionslogik für RemoveRowPopUp.xaml
+    /// Interaktionslogik für SelectDashboardPopUp.xaml
     /// </summary>
-    public partial class RemoveRowPopUp : Window
+    public partial class SelectDashboardPopUp : Window
     {
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
 
-        public Row SelectedRow { get { return RowSelectBox.SelectedItem as Row; } }
         public Dashboard SelectedDashboard { get { return DashboardSelectBox.SelectedItem as Dashboard; } }
 
-        public RemoveRowPopUp(ObservableList<Dashboard> dashboards)
+        public SelectDashboardPopUp(ObservableList<Dashboard> dashboards)
         {
             InitializeComponent();
             DashboardSelectBox.ItemsSource = dashboards;
         }
 
-        private void RemoveRow_Click(object sender, RoutedEventArgs e)
+        private void RemoveDashboard_Click(object sender, RoutedEventArgs e)
         {
             buttonPressed = true;
             this.Close();
-        }
-
-        private void DashboardSelectBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RowSelectBox.SelectedItem = null;
-            RowSelectBox.ItemsSource = null;
-            RowSelectBox.ItemsSource = (DashboardSelectBox.SelectedItem as Dashboard).GetRowsWithoutFreeSpace();
         }
     }
 }

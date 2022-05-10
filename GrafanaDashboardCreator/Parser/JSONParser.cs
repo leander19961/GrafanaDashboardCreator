@@ -268,7 +268,6 @@ namespace GrafanaDashboardCreator.Parser
                 }
             }
 
-            string debug = dashboardJSON.ToString();
             return dashboardJSON;
         }
 

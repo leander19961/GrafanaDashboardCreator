@@ -314,5 +314,80 @@ namespace GrafanaDashboardCreator.Model
             row.Datasources[indexOne] = row.Datasources[indexTwo];
             row.Datasources[indexTwo] = tmp;
         }
+
+        public void SwapRowsLeft(Row row, Dashboard dashboard)
+        {
+            if (dashboard.GetRows()[1] == row || row.Name == "FreeSpace")
+            {
+                return;
+            }
+
+            int indexOne = dashboard.GetRows().IndexOf(row);
+            int indexTwo = dashboard.GetRows().IndexOf(row) - 1;
+
+            Row tmpRow = dashboard.GetRows()[indexOne];
+            dashboard.GetRows()[indexOne] = dashboard.GetRows()[indexTwo];
+            dashboard.GetRows()[indexTwo] = tmpRow;
+
+            TabControl dashboardTabControl = dashboard.LinkedTabControl;
+            TabItem selectedTabItem = dashboardTabControl.SelectedItem as TabItem;
+
+            List<TabItem> dasboardRowTabItems = new List<TabItem>();
+
+            foreach (Row _row in dashboard.GetRows())
+            {
+                dasboardRowTabItems.Add(_row.LinkedTabItem);
+            }
+
+            foreach (TabItem tabItem in dasboardRowTabItems)
+            {
+                dashboardTabControl.Items.Remove(tabItem);
+            }
+
+            foreach (TabItem tabItem in dasboardRowTabItems)
+            {
+                dashboardTabControl.Items.Add(tabItem);
+            }
+
+            dashboardTabControl.SelectedItem = selectedTabItem;
+        }
+
+        public void SwapRowsRight(Row row, Dashboard dashboard)
+        {
+            if (dashboard.GetRows()[dashboard.GetRows().Count - 1] == row || row.Name == "FreeSpace")
+            {
+                return;
+            }
+
+            int indexOne = dashboard.GetRows().IndexOf(row);
+            int indexTwo = dashboard.GetRows().IndexOf(row) + 1;
+
+
+            Row tmp = dashboard.GetRows()[indexOne];
+            dashboard.GetRows()[indexOne] = dashboard.GetRows()[indexTwo];
+            dashboard.GetRows()[indexTwo] = tmp;
+
+            TabControl dashboardTabControl = dashboard.LinkedTabControl;
+            TabItem selectedTabItem = dashboardTabControl.SelectedItem as TabItem;
+
+            List<TabItem> dasboardRowTabItems = new List<TabItem>();
+
+            foreach (Row _row in dashboard.GetRows())
+            {
+                dasboardRowTabItems.Add(_row.LinkedTabItem);
+            }
+
+            foreach (TabItem tabItem in dasboardRowTabItems)
+            {
+                dashboardTabControl.Items.Remove(tabItem);
+            }
+
+            foreach (TabItem tabItem in dasboardRowTabItems)
+            {
+                dashboardTabControl.Items.Add(tabItem);
+            }
+
+            dashboardTabControl.SelectedItem = selectedTabItem;
+        }
     }
 }

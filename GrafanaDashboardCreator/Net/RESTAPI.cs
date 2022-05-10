@@ -14,7 +14,9 @@ namespace GrafanaDashboardCreator.Net
 {
     internal static class RESTAPI
     {
-        //Returns XML
+        ///<summary>
+        ///Returns XML
+        ///</summary>
         internal static string GETNodesFromOpenNMS()
         {
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTOpenNMSGETNodesURL);
@@ -32,7 +34,9 @@ namespace GrafanaDashboardCreator.Net
             return result;
         }
 
-        //Returns XML
+        ///<summary>
+        ///Returns XML
+        ///</summary>
         internal static string GETResourcesFromOpenNMS(string nodeID)
         {
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTOpenNMSGETResourcesURL.Replace(ReplacePatternRESTNodeID, nodeID));
@@ -50,7 +54,9 @@ namespace GrafanaDashboardCreator.Net
             return result;
         }
 
-        //Returns Json
+        ///<summary>
+        ///Returns Json
+        ///</summary>
         internal static string GETFoldersFromGrafana(string nodeID)
         {
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGrafanaGETFoldersURL);
@@ -70,7 +76,9 @@ namespace GrafanaDashboardCreator.Net
             return result;
         }
 
-        //Expects Json
+        ///<summary>
+        ///Expects Json
+        ///</summary>
         internal static string POSTJsonToGrafana(string json)
         {
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGrafanaPOSTDashboardURL);

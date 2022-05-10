@@ -160,7 +160,7 @@ namespace GrafanaDashboardCreator
             Dashboard dashboard = rowPopUp.SelectedDashboard;
 
             if (dashboard == null)
-            { 
+            {
                 return; //TODO
             }
 
@@ -236,6 +236,12 @@ namespace GrafanaDashboardCreator
             }
 
             Dashboard dashboard = popUp.SelectedDashboard;
+
+            if (dashboard == null)
+            {
+                return; //TODO
+            }
+
             MainTabControl.Items.Remove(dashboard.LinkedTabItem);
             MainTabControl.Items.Refresh();
             modelService.RemoveDashboard(dashboard);
@@ -256,7 +262,7 @@ namespace GrafanaDashboardCreator
 
             Row row = popUp.SelectedRow;
 
-            if (row.Name.Equals("FreeSpace"))
+            if (row == null)
             {
                 return; //TODO
             }
@@ -302,13 +308,25 @@ namespace GrafanaDashboardCreator
 
         private void CreateExportJSONButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (modelService.GetDashboards().Count == 0 || modelService.GetDatasources().Count == 0)
+            SelectDashboardPopUp selectDashboardPopUp = new SelectDashboardPopUp(modelService.GetDashboards())
             {
-                return; //TODO
+                Owner = this
+            };
+            selectDashboardPopUp.ShowDialog();
+
+            if (!selectDashboardPopUp.ButtonPressed)
+            {
+                return;
+            }
+
+            Dashboard selectedDashboard = selectDashboardPopUp.SelectedDashboard;
+
+            if (selectedDashboard == null)
+            {
+                return;
             }
 
             bool noTemplatefound = false;
-            Dashboard selectedDashboard = modelService.GetDashboardByTabItem(MainTabControl.SelectedItem as TabItem);
             foreach (Row row in selectedDashboard.GetRows())
             {
                 foreach (Datasource datasource in row.Datasources)
@@ -322,25 +340,40 @@ namespace GrafanaDashboardCreator
 
             if (noTemplatefound)
             {
-                return; //TODO
+                ErrorPopUp popUp = new ErrorPopUp("Not all of your datasources does have a Template")
+                {
+                    Owner = this
+                };
+                popUp.ShowDialog();
+
+                return;
             }
 
-            TabItem selectedTab = MainTabControl.SelectedItem as TabItem;
-            Dashboard dashboard = modelService.GetDashboardByTabItem(selectedTab);
-
-            JObject result = null;
-            if (dashboard != null)
+            try
             {
-                result =  JSONParser.CreateNewDashboardJSON(dashboard);
+                JObject result = null;
+                if (selectedDashboard != null)
+                {
+                    result = JSONParser.CreateNewDashboardJSON(selectedDashboard);
+                }
+
+                JSONViewer viewer = new JSONViewer(result.ToString())
+                {
+                    Owner = this
+                };
+                viewer.Show();
+
+                //TODO
             }
-
-            JSONViewer viewer = new JSONViewer(result.ToString())
+            catch (Exception ex)
             {
-                Owner = this
-            };
-            viewer.Show();
 
-            //TODO
+                JSONViewer viewer = new JSONViewer(ex.StackTrace.ToString())
+                {
+                    Owner = this
+                };
+                viewer.Show();
+            }
         }
 
         private void GetNewTemplateButton_OnCLick(object sender, RoutedEventArgs e)
@@ -540,6 +573,48 @@ namespace GrafanaDashboardCreator
             }
 
             selectedRow.LinkedListView.Items.Refresh();
+        }
+
+        private void MoveLeftSelectedRowButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            TabItem selectedTab = MainTabControl.SelectedItem as TabItem;
+            Dashboard selectedDashboard = modelService.GetDashboardByTabItem(selectedTab);
+
+            if (selectedDashboard == null)
+            {
+                return; //TODO
+            }
+
+            selectedTab = selectedDashboard.LinkedTabControl.SelectedItem as TabItem;
+            Row selectedRow = modelService.GetRowByTabItem(selectedTab);
+
+            if (selectedRow == null)
+            {
+                return; //TODO
+            }
+
+            modelService.SwapRowsLeft(selectedRow, selectedDashboard);
+        }
+
+        private void MoveRightSelectedRowButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            TabItem selectedTab = MainTabControl.SelectedItem as TabItem;
+            Dashboard selectedDashboard = modelService.GetDashboardByTabItem(selectedTab);
+
+            if (selectedDashboard == null)
+            {
+                return; //TODO
+            }
+
+            selectedTab = selectedDashboard.LinkedTabControl.SelectedItem as TabItem;
+            Row selectedRow = modelService.GetRowByTabItem(selectedTab);
+
+            if (selectedRow == null)
+            {
+                return; //TODO
+            }
+
+            modelService.SwapRowsRight(selectedRow, selectedDashboard);
         }
     }
 }
