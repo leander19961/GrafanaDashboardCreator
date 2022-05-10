@@ -8,7 +8,8 @@
         Title="SelectDashboardPopUp" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Label Content="Select dashboard for Json-export" HorizontalAlignment="Center" Margin="0,0,0,75" VerticalAlignment="Center"/>
-        <Button x:Name="SelectDashboardButton" Content="Select Dashboard" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Center" Click="RemoveDashboard_Click"/>
+        <Button x:Name="SelectDashboardButton" Content="Select Dashboard" HorizontalAlignment="Center" Margin="150,75,0,0" VerticalAlignment="Center" Click="SelectDashboardButton_Click"/>
         <ComboBox x:Name="DashboardSelectBox" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120"/>
+        <Button Content="Select All Dashboards" HorizontalAlignment="Center" Margin="0,75,125,0" VerticalAlignment="Center" Click="SelectAllDashboardsButton_OnClick"/>
     </Grid>
 </Window>

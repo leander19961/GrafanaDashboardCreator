@@ -21,11 +21,33 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class SelectDashboardPopUp : Window
     {
-        private bool buttonPressed = false;
+        private bool multiSelectionButtonPressed = false;
+        private bool singleSelectionButtonPressed = false;
 
-        public bool ButtonPressed { get { return buttonPressed; } }
+        public bool MultiSelectionButtonPressed { get { return multiSelectionButtonPressed; } }
+        public bool SingleSelectionButtonPressed { get { return singleSelectionButtonPressed; } }
 
-        public Dashboard SelectedDashboard { get { return DashboardSelectBox.SelectedItem as Dashboard; } }
+
+        public List<Dashboard> SelectedDashboard
+        { 
+            get 
+            {
+                if (singleSelectionButtonPressed)
+                {
+                    return new List<Dashboard>() { DashboardSelectBox.SelectedItem as Dashboard };
+                }
+                else
+                {
+                    List<Dashboard> result = new List<Dashboard>();
+                    foreach (Dashboard dashboard in DashboardSelectBox.ItemsSource)
+                    {
+                        result.Add(dashboard);
+                    }
+
+                    return result;
+                }
+            } 
+        }
 
         public SelectDashboardPopUp(ObservableList<Dashboard> dashboards)
         {
@@ -33,9 +55,15 @@ namespace GrafanaDashboardCreator.View
             DashboardSelectBox.ItemsSource = dashboards;
         }
 
-        private void RemoveDashboard_Click(object sender, RoutedEventArgs e)
+        private void SelectDashboardButton_Click(object sender, RoutedEventArgs e)
         {
-            buttonPressed = true;
+            singleSelectionButtonPressed = true;
+            this.Close();
+        }
+
+        private void SelectAllDashboardsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            multiSelectionButtonPressed = true;
             this.Close();
         }
     }

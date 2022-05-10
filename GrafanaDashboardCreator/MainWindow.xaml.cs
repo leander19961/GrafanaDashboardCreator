@@ -81,6 +81,7 @@ namespace GrafanaDashboardCreator
             {
                 JSONViewer viewer = new JSONViewer(ex.ToString())
                 {
+                    Title = "Error!",
                     Owner = this
                 };
 
@@ -314,26 +315,55 @@ namespace GrafanaDashboardCreator
             };
             selectDashboardPopUp.ShowDialog();
 
-            if (!selectDashboardPopUp.ButtonPressed)
+            if (!selectDashboardPopUp.SingleSelectionButtonPressed && !selectDashboardPopUp.MultiSelectionButtonPressed)
             {
+                JSONViewer viewer = new JSONViewer("Return at Buttoncheck")
+                {
+                    Title = "Error!",
+                    Owner = this
+                };
+                viewer.Show();
                 return;
             }
 
-            Dashboard selectedDashboard = selectDashboardPopUp.SelectedDashboard;
+            List<Dashboard> selectedDashboard = selectDashboardPopUp.SelectedDashboard;
 
             if (selectedDashboard == null)
             {
+                JSONViewer viewer = new JSONViewer("Return at List-Test")
+                {
+                    Title = "Error!",
+                    Owner = this
+                };
+                viewer.Show();
                 return;
             }
 
-            bool noTemplatefound = false;
-            foreach (Row row in selectedDashboard.GetRows())
+            foreach (Dashboard dashboard in selectedDashboard)
             {
-                foreach (Datasource datasource in row.Datasources)
+                if (dashboard == null)
                 {
-                    if (datasource.Template == null)
+                    JSONViewer viewer = new JSONViewer("Return at Dashboards-Test")
                     {
-                        noTemplatefound = true;
+                        Title = "Error!",
+                        Owner = this
+                    };
+                    viewer.Show();
+                    return;
+                }
+            }
+
+            bool noTemplatefound = false;
+            foreach (Dashboard dashboard in selectedDashboard)
+            {
+                foreach (Row row in dashboard.GetRows())
+                {
+                    foreach (Datasource datasource in row.Datasources)
+                    {
+                        if (datasource.Template == null)
+                        {
+                            noTemplatefound = true;
+                        }
                     }
                 }
             }
@@ -351,25 +381,30 @@ namespace GrafanaDashboardCreator
 
             try
             {
-                JObject result = null;
-                if (selectedDashboard != null)
+                foreach (Dashboard dashboard in selectedDashboard)
                 {
-                    result = JSONParser.CreateNewDashboardJSON(selectedDashboard);
+                    JObject result = null;
+                    if (selectedDashboard != null)
+                    {
+                        result = JSONParser.CreateNewDashboardJSON(dashboard);
+                    }
+
+                    JSONViewer viewer = new JSONViewer(result.ToString())
+                    {
+                        Title = dashboard.Name,
+                        Owner = this
+                    };
+                    viewer.Show();
+
+                    //TODO
                 }
-
-                JSONViewer viewer = new JSONViewer(result.ToString())
-                {
-                    Owner = this
-                };
-                viewer.Show();
-
-                //TODO
             }
             catch (Exception ex)
             {
 
                 JSONViewer viewer = new JSONViewer(ex.StackTrace.ToString())
                 {
+                    Title = "Error!",
                     Owner = this
                 };
                 viewer.Show();
