@@ -30,7 +30,7 @@ namespace GrafanaDashboardCreator
     /// </summary>
     public partial class MainWindow : Window
     {
-        ModelService modelService;
+        readonly ModelService modelService;
 
         public MainWindow()
         {
