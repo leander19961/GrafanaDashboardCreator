@@ -15,7 +15,6 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string DataStoreDirectory = Path.Combine(ProgramDirectory + "\\datastore");
         internal static readonly string TemplateDirectory = Path.Combine(DataStoreDirectory + "\\Templates");
         internal static readonly string PanelTemplateDirectory = Path.Combine(TemplateDirectory + "\\PanelTemplates");
-
         //XML
         internal static readonly string NodeXmlFilePath = Path.Combine(DataStoreDirectory + "\\nodes.xml");
         internal static readonly string SNMPXmlFilePath = Path.Combine(DataStoreDirectory + "\\snmp.xml");
