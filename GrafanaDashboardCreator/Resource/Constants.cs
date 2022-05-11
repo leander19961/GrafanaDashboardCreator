@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GrafanaDashboardCreator.Parser;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string DataStoreDirectory = Path.Combine(ProgramDirectory + "\\datastore");
         internal static readonly string TemplateDirectory = Path.Combine(DataStoreDirectory + "\\Templates");
         internal static readonly string PanelTemplateDirectory = Path.Combine(TemplateDirectory + "\\PanelTemplates");
+        internal static readonly string CredentialsDirectory = Path.Combine(DataStoreDirectory + "\\Credentials");
         //XML
         internal static readonly string NodeXmlFilePath = Path.Combine(DataStoreDirectory + "\\nodes.xml");
         internal static readonly string SNMPXmlFilePath = Path.Combine(DataStoreDirectory + "\\snmp.xml");
@@ -22,22 +24,22 @@ namespace GrafanaDashboardCreator.Resource
         //JSON
         internal static readonly string DashboardJSONFilePath = Path.Combine(TemplateDirectory + "\\emptydashboard.json");
         internal static readonly string RowJSONFilePath = Path.Combine(TemplateDirectory + "\\emptyrow.json");
+        //Credentials
+        internal static readonly string OpenNMSCredentailsFilePath = Path.Combine(CredentialsDirectory + "\\opennms.xml");
+        internal static readonly string GrafanaCredentailsFilePath = Path.Combine(CredentialsDirectory + "\\grafana.xml");
+        internal static readonly string OpenNMSCredentailsXmlNode = "OpenNMSCredentials";
+        internal static readonly string GrafanaCredentailsXmlNode = "GrafanaCredentials";
 
         //Constants for REST
         //OpenNMS
-        //internal static readonly string RESTOpenNMSUsername = "admin";
-        //internal static readonly string RESTOpenNMSPassword = "admin";
-        internal static readonly string RESTOpenNMSEncoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
-                                                            .GetBytes("admin" + ":" + "admin"));
-        internal static readonly string RESTOpenNMSBaseURL = "http://nms.dc.gls/opennms/rest";
-        internal static readonly string RESTOpenNMSGETNodesURL = RESTOpenNMSBaseURL + "/nodes?limit=0";
-        internal static readonly string RESTOpenNMSGETResourcesURL = RESTOpenNMSBaseURL + "/resources/fornode/§NodeID§";
-        internal static readonly string RESTOpenNMSGETSNMPURL = RESTOpenNMSBaseURL + "/nodes/§NodeID§/snmpinterfaces?limit=0";
+        internal static readonly string RESTOpenNMSAPIURL = "/rest";
+        internal static readonly string RESTOpenNMSGETNodesURL = RESTOpenNMSAPIURL + "/nodes?limit=0";
+        internal static readonly string RESTOpenNMSGETResourcesURL = RESTOpenNMSAPIURL + "/resources/fornode/§NodeID§";
+        internal static readonly string RESTOpenNMSGETSNMPURL = RESTOpenNMSAPIURL + "/nodes/§NodeID§/snmpinterfaces?limit=0";
         //Grafana
-        internal static readonly string RESTGrafanaToken = "";
-        internal static readonly string RESTGrafanaBaseURL = "http://grafana.dc.gls:3000/api";
-        internal static readonly string RESTGrafanaGETFoldersURL = RESTGrafanaBaseURL + "/folders?limit=0";
-        internal static readonly string RESTGrafanaPOSTDashboardURL = RESTGrafanaBaseURL + "/dashboards/db";
+        internal static readonly string RESTGrafanaAPIURL = "/api";
+        internal static readonly string RESTGrafanaGETFoldersURL = RESTGrafanaAPIURL + "/folders?limit=0";
+        internal static readonly string RESTGrafanaPOSTDashboardURL = RESTGrafanaAPIURL + "/dashboards/db";
 
         //Constants for JSONParse
         //Dashboard
@@ -61,6 +63,9 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string JSONPanelTypePropertyName = "type";
         internal static readonly string JSONPanelTypePropertyValue = "graph";
         internal static readonly string JSONPanelGridPosPropertyName = "gridPos";
+        internal static readonly string JSONFolderTitlePropertyName = "title";
+        internal static readonly string JSONFolderIDPropertyName = "id";
+        internal static readonly string JSONFolderUIDPropertyName = "uid";
         //GridPos
         internal static readonly string JSONGridPosPropertyX = "x";
         internal static readonly string JSONGridPosPropertyY = "y";

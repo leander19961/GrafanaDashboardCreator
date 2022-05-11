@@ -99,6 +99,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\GridPos.cs" />
+    <Compile Include="Model\Credentials.cs" />
+    <Compile Include="Model\Folder.cs" />
     <Compile Include="Model\Node.cs" />
     <Compile Include="Net\RESTAPI.cs" />
     <Compile Include="Resource\Constants.cs" />
@@ -112,11 +114,17 @@
     <Compile Include="View\AreYouShurePopUp.xaml.cs">
       <DependentUpon>AreYouShurePopUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CredentialsViewer.xaml.cs">
+      <DependentUpon>CredentialsViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DashboardPopUp.xaml.cs">
       <DependentUpon>DashboardPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditCredentialsPopUp.xaml.cs">
+      <DependentUpon>EditCredentialsPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ErrorPopUp.xaml.cs">
       <DependentUpon>ErrorPopUp.xaml</DependentUpon>
@@ -144,6 +152,9 @@
     </Compile>
     <Compile Include="View\SelectDashboardPopUp.xaml.cs">
       <DependentUpon>SelectDashboardPopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectGrafanaFolderPopUp.xaml.cs">
+      <DependentUpon>SelectGrafanaFolderPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SelectNodePopUp.xaml.cs">
       <DependentUpon>SelectNodePopUp.xaml</DependentUpon>
@@ -178,11 +189,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CredentialsViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DashboardPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditCredentialsPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SelectDashboardPopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectGrafanaFolderPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

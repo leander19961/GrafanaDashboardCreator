@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using GrafanaDashboardCreator.Helper;
 using GrafanaDashboardCreator.Model;
 using GrafanaDashboardCreator.View;
@@ -271,15 +272,9 @@ namespace GrafanaDashboardCreator.Parser
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
-                {
-                    Title = "Error!",
-                    Owner = App.Current.MainWindow
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
 
             return dashboardJSON;
@@ -406,18 +401,44 @@ namespace GrafanaDashboardCreator.Parser
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
-                {
-                    Title = "Error!",
-                    Owner = App.Current.MainWindow
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
 
             return newTemplate.ToString();
+        }
+    
+        internal static List<Folder> GetFolders(string json)
+        {
+            List<Folder> folders = new List<Folder>();
+            JArray foldersJson = JArray.Parse(json);
+
+            foreach (JObject folder in foldersJson.Children())
+            {
+                string title = "";
+                string id = "";
+                string uid = "";
+                foreach (JProperty folder_property in folder.Properties())
+                {
+                    if (folder_property.Name.Equals(JSONFolderTitlePropertyName))
+                    {
+                        title = folder_property.Value.ToString();
+                    }
+                    if (folder_property.Name.Equals(JSONFolderIDPropertyName))
+                    {
+                        id = folder_property.Value.ToString();
+                    }
+                    if (folder_property.Name.Equals(JSONFolderUIDPropertyName))
+                    {
+                        uid = folder_property.Value.ToString();
+                    }
+                }
+
+                folders.Add(new Folder(title, id, uid));
+            }
+
+            return folders;
         }
     }
 }

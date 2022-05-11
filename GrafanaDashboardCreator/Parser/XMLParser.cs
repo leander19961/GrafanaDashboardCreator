@@ -10,6 +10,7 @@ using GrafanaDashboardCreator.Model;
 
 using static GrafanaDashboardCreator.Resource.Constants;
 using GrafanaDashboardCreator.View;
+using System.Windows;
 
 namespace GrafanaDashboardCreator.Parser
 {
@@ -55,16 +56,49 @@ namespace GrafanaDashboardCreator.Parser
 
                 modelService.SortDataSources();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
-                {
-                    Title = "Error!",
-                    Owner = App.Current.MainWindow
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
+        }
+
+        internal static List<Datasource> GetResourcesFromXMLAutomation(string resourcesXML, Node node)
+        {
+            List<Datasource> result = new List<Datasource>();
+            try
+            {
+                XmlDocument resources = new XmlDocument();
+                resources.LoadXml(resourcesXML);
+                XmlNode XMLNode = resources.SelectSingleNode("resource");
+                XmlNode internalResources = XMLNode.SelectSingleNode("children");
+
+                char[] seperators = { '.' };
+
+                string nodeID = GetNodeID(internalResources);
+                string nodeName = XMLNode.Attributes.GetNamedItem("name").Value;
+                string nodeLabel = XMLNode.Attributes.GetNamedItem("label").Value;
+
+                foreach (XmlNode resource in internalResources.ChildNodes)
+                {
+                    if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Node Data")
+                    {
+
+                    }
+                    else
+                    {
+                        string label = resource.Attributes.GetNamedItem("label").Value;
+                        string resourceID = resource.Attributes.GetNamedItem("id").Value.Split(seperators, 2)[1];
+
+                        result.Add(new Datasource(label, resourceID, node));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
+
+            return result;
         }
 
         internal static void GetNodesFromXML(ModelService modelService, string nodesXML)
@@ -97,6 +131,33 @@ namespace GrafanaDashboardCreator.Parser
             }
         }
 
+        internal static List<Node> GetNodesFromXMLAutomation(string nodesXML)
+        {
+            List<Node> result = new List<Node>();
+            try
+            {
+                XmlDocument nodes = new XmlDocument();
+                nodes.LoadXml(nodesXML);
+                XmlNode internalNodes = nodes.SelectSingleNode("nodes");
+
+                foreach (XmlNode node in internalNodes.ChildNodes)
+                {
+                    string label = node.Attributes.GetNamedItem("label").Value;
+                    string nodeID = node.Attributes.GetNamedItem("id").Value;
+                    string nodeForeignID = node.Attributes.GetNamedItem("foreignId").Value;
+                    string nodeForeignSource = node.Attributes.GetNamedItem("foreignSource").Value;
+
+                    result.Add(new Node(label, nodeID, nodeForeignID, nodeForeignSource));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
+
+            return result;
+        }
+
         internal static string GetNodeID(XmlNode resources)
         {
             try
@@ -117,18 +178,41 @@ namespace GrafanaDashboardCreator.Parser
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
-                {
-                    Title = "Error!",
-                    Owner = App.Current.MainWindow
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
 
             return null;
+        }
+
+        internal static Dictionary<string, string> GetOpenNMSCredentials()
+        {
+            XmlDocument openNMSCredentialsXml = new XmlDocument();
+            openNMSCredentialsXml.Load(OpenNMSCredentailsFilePath);
+            XmlNode credentials = openNMSCredentialsXml.SelectSingleNode(OpenNMSCredentailsXmlNode);
+
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            result["url"] = credentials.Attributes["url"].Value;
+            result["username"] = credentials.Attributes["username"].Value;
+            result["password"] = credentials.Attributes["password"].Value;
+
+            return result;
+        }
+
+        internal static Dictionary<string, string> GetGrafanaCredentials()
+        {
+            XmlDocument openNMSCredentialsXml = new XmlDocument();
+            openNMSCredentialsXml.Load(GrafanaCredentailsFilePath);
+            XmlNode credentials = openNMSCredentialsXml.SelectSingleNode(GrafanaCredentailsXmlNode);
+
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            result["url"] = credentials.Attributes["url"].Value;
+            result["token"] = credentials.Attributes["token"].Value;
+
+            return result;
         }
     }
 }

@@ -19,7 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+//using System.Windows.Shapes;
 
 using static GrafanaDashboardCreator.Resource.Constants;
 
@@ -79,13 +79,7 @@ namespace GrafanaDashboardCreator
             }
             catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(ex.ToString())
-                {
-                    Title = "Error!",
-                    Owner = this
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
         }
 
@@ -317,25 +311,13 @@ namespace GrafanaDashboardCreator
 
             if (!selectDashboardPopUp.SingleSelectionButtonPressed && !selectDashboardPopUp.MultiSelectionButtonPressed)
             {
-                JSONViewer viewer = new JSONViewer("Return at Buttoncheck")
-                {
-                    Title = "Error!",
-                    Owner = this
-                };
-                viewer.Show();
                 return;
             }
 
-            List<Dashboard> selectedDashboard = selectDashboardPopUp.SelectedDashboard;
+            List<Dashboard> selectedDashboard = selectDashboardPopUp.SelectedDashboards;
 
             if (selectedDashboard == null)
             {
-                JSONViewer viewer = new JSONViewer("Return at List-Test")
-                {
-                    Title = "Error!",
-                    Owner = this
-                };
-                viewer.Show();
                 return;
             }
 
@@ -343,12 +325,6 @@ namespace GrafanaDashboardCreator
             {
                 if (dashboard == null)
                 {
-                    JSONViewer viewer = new JSONViewer("Return at Dashboards-Test")
-                    {
-                        Title = "Error!",
-                        Owner = this
-                    };
-                    viewer.Show();
                     return;
                 }
             }
@@ -370,12 +346,7 @@ namespace GrafanaDashboardCreator
 
             if (noTemplatefound)
             {
-                ErrorPopUp popUp = new ErrorPopUp("Not all of your datasources does have a Template")
-                {
-                    Owner = this
-                };
-                popUp.ShowDialog();
-
+                MessageBox.Show("Not all of your datasources does have a Template", "Error!");
                 return;
             }
 
@@ -401,13 +372,7 @@ namespace GrafanaDashboardCreator
             }
             catch (Exception ex)
             {
-
-                JSONViewer viewer = new JSONViewer(ex.StackTrace.ToString())
-                {
-                    Title = "Error!",
-                    Owner = this
-                };
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
             }
         }
 
@@ -650,6 +615,61 @@ namespace GrafanaDashboardCreator
             }
 
             modelService.SwapRowsRight(selectedRow, selectedDashboard);
+        }
+
+        private void OpenCredentialsViewer_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CredentialsViewer viewer = new CredentialsViewer(modelService)
+                {
+                    Owner = this
+                };
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PostDashboardsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SelectDashboardPopUp popUp = new SelectDashboardPopUp(modelService.GetDashboards())
+                {
+                    Owner = this
+                };
+                popUp.ShowDialog();
+
+                if (!popUp.SingleSelectionButtonPressed && !popUp.MultiSelectionButtonPressed)
+                {
+                    return;
+                }
+
+                List<Dashboard> dashboards = popUp.SelectedDashboards;
+
+                SelectGrafanaFolderPopUp folderPopUp = new SelectGrafanaFolderPopUp()
+                {
+                    Owner = this
+                };
+                folderPopUp.ShowDialog();
+
+                if (!folderPopUp.ButtonPressed)
+                {
+                    return;
+                }
+
+                foreach (Dashboard dashboard in dashboards)
+                {
+                    //RESTAPI.POSTJsonToGrafana(JSONParser.CreateNewDashboardJSON(dashboard).ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

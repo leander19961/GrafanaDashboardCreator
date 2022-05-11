@@ -123,6 +123,19 @@ namespace GrafanaDashboardCreator.Model
             return nodeList;
         }
 
+        public ObservableList<Credentials> GetCredentials()
+        {
+            ObservableList<Credentials> credentialList = new ObservableList<Credentials>();
+
+            Dictionary<string, string> openNMSCredentials = XMLParser.GetOpenNMSCredentials();
+            Dictionary<string, string> grafanaCredentials = XMLParser.GetGrafanaCredentials();
+
+            credentialList.Add(new Credentials(OpenNMSCredentailsXmlNode, openNMSCredentials["username"], openNMSCredentials["password"], "", openNMSCredentials["url"]));
+            credentialList.Add(new Credentials(GrafanaCredentailsXmlNode, "", "", grafanaCredentials["token"], grafanaCredentials["url"]));
+
+            return credentialList;
+        }
+
         public Dashboard CreateDashboard(string name, TabItem tabItem, TabControl tabControl)
         {
             Dashboard newDashBoard = new Dashboard(name, tabItem, tabControl);
@@ -169,6 +182,23 @@ namespace GrafanaDashboardCreator.Model
                 }
             }
             datasources.Add(newDatasource);
+        }
+
+        internal void EditCredentialProperties(Credentials credentials, string username, string password, string token, string url)
+        {
+            credentials.Username = username;
+            credentials.Password = password;
+            credentials.Token = token;
+            credentials.Url = url;
+
+            if (credentials.Name == OpenNMSCredentailsXmlNode)
+            {
+                credentials.SaveToOpenNMSFile();
+            }
+            else if (credentials.Name == GrafanaCredentailsXmlNode)
+            {
+                credentials.SaveToGrafanaFile();
+            }
         }
 
         public void SortDataSources()

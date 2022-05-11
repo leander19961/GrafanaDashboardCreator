@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GrafanaDashboardCreator.Parser;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,15 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string GETNodesFromOpenNMS()
         {
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTOpenNMSGETNodesURL);
+            Dictionary<string, string> crecentials = XMLParser.GetOpenNMSCredentials();
 
-            httpRequest.Headers["Authorization"] = "Basic " + RESTOpenNMSEncoded;
+            string baseUrl = crecentials["url"];
+            string username = crecentials["username"];
+            string password = crecentials["password"];
+            string encodedCredentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(baseUrl + RESTOpenNMSGETNodesURL);
+
+            httpRequest.Headers["Authorization"] = "Basic " + encodedCredentials;
             httpRequest.Method = "GET";
 
             string result = "";
@@ -39,9 +46,15 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string GETResourcesFromOpenNMS(string nodeID)
         {
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTOpenNMSGETResourcesURL.Replace(ReplacePatternRESTNodeID, nodeID));
+            Dictionary<string, string> crecentials = XMLParser.GetOpenNMSCredentials();
 
-            httpRequest.Headers["Authorization"] = "Basic " + RESTOpenNMSEncoded;
+            string baseUrl = crecentials["url"];
+            string username = crecentials["username"];
+            string password = crecentials["password"];
+            string encodedCredentials = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(baseUrl + RESTOpenNMSGETResourcesURL.Replace(ReplacePatternRESTNodeID, nodeID));
+
+            httpRequest.Headers["Authorization"] = "Basic " + encodedCredentials;
             httpRequest.Method = "GET";
 
             string result = "";
@@ -57,11 +70,15 @@ namespace GrafanaDashboardCreator.Net
         ///<summary>
         ///Returns Json
         ///</summary>
-        internal static string GETFoldersFromGrafana(string nodeID)
+        internal static string GETFoldersFromGrafana()
         {
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGrafanaGETFoldersURL);
+            Dictionary<string, string> crecentials = XMLParser.GetOpenNMSCredentials();
 
-            httpRequest.Headers["Authorization"] = "Bearer " + RESTGrafanaToken;
+            string baseUrl = crecentials["url"];
+            string token = crecentials["token"];
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(baseUrl + RESTGrafanaGETFoldersURL);
+
+            httpRequest.Headers["Authorization"] = "Bearer " + token;
             httpRequest.Headers["Accept"] = "application/json";
             httpRequest.Headers["Content-Type"] = "application/json";
             httpRequest.Method = "GET";
@@ -81,9 +98,13 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string POSTJsonToGrafana(string json)
         {
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(RESTGrafanaPOSTDashboardURL);
+            Dictionary<string, string> crecentials = XMLParser.GetOpenNMSCredentials();
 
-            httpRequest.Headers["Authorization"] = "Bearer " + RESTGrafanaToken;
+            string baseUrl = crecentials["url"];
+            string token = crecentials["token"];
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(baseUrl + RESTGrafanaPOSTDashboardURL);
+
+            httpRequest.Headers["Authorization"] = "Bearer " + token;
             httpRequest.Headers["Accept"] = "application/json";
             httpRequest.Headers["Content-Type"] = "application/json";
             httpRequest.Method = "POST";

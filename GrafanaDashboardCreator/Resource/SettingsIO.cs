@@ -28,6 +28,11 @@ namespace GrafanaDashboardCreator.Resource
                 Directory.CreateDirectory(PanelTemplateDirectory);
             }
 
+            if (!Directory.Exists(CredentialsDirectory))
+            {
+                Directory.CreateDirectory(CredentialsDirectory);
+            }
+
             if (!File.Exists(DashboardJSONFilePath))
             {
                 JObject emptyDashbooardJSON = JObject.Parse(EmptyDashboardJSON);
@@ -38,6 +43,27 @@ namespace GrafanaDashboardCreator.Resource
             {
                 JObject emptyRowJSON = JObject.Parse(EmptyRowJSON);
                 File.WriteAllText(RowJSONFilePath, emptyRowJSON.ToString());
+            }
+
+            if (!File.Exists(OpenNMSCredentailsFilePath))
+            {
+                XmlDocument openNMSCredentials = new XmlDocument();
+                XmlNode credentials = openNMSCredentials.CreateElement(OpenNMSCredentailsXmlNode);
+                credentials.Attributes.Append(openNMSCredentials.CreateAttribute("url"));
+                credentials.Attributes.Append(openNMSCredentials.CreateAttribute("username"));
+                credentials.Attributes.Append(openNMSCredentials.CreateAttribute("password"));
+                openNMSCredentials.AppendChild(credentials);
+                openNMSCredentials.Save(OpenNMSCredentailsFilePath);
+            }
+
+            if (!File.Exists(GrafanaCredentailsFilePath))
+            {
+                XmlDocument openNMSCredentials = new XmlDocument();
+                XmlNode credentials = openNMSCredentials.CreateElement(GrafanaCredentailsXmlNode);
+                credentials.Attributes.Append(openNMSCredentials.CreateAttribute("url"));
+                credentials.Attributes.Append(openNMSCredentials.CreateAttribute("token"));
+                openNMSCredentials.AppendChild(credentials);
+                openNMSCredentials.Save(GrafanaCredentailsFilePath);
             }
         }
 

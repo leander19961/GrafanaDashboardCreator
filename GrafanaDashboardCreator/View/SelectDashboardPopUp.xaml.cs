@@ -28,7 +28,7 @@ namespace GrafanaDashboardCreator.View
         public bool SingleSelectionButtonPressed { get { return singleSelectionButtonPressed; } }
 
 
-        public List<Dashboard> SelectedDashboard
+        public List<Dashboard> SelectedDashboards
         { 
             get 
             {
