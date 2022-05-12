@@ -129,9 +129,6 @@
     <Compile Include="View\EditDashboardsView.xaml.cs">
       <DependentUpon>EditDashboardsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ErrorPopUp.xaml.cs">
-      <DependentUpon>ErrorPopUp.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\GetNewTemplatePopUp.xaml.cs">
       <DependentUpon>GetNewTemplatePopUp.xaml</DependentUpon>
     </Compile>
@@ -140,12 +137,6 @@
     </Compile>
     <Compile Include="View\JSONViewer.xaml.cs">
       <DependentUpon>JSONViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\RemoveDashboardPopUp.xaml.cs">
-      <DependentUpon>RemoveDashboardPopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\RemoveRowPopUp.xaml.cs">
-      <DependentUpon>RemoveRowPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RenamePopUp.xaml.cs">
       <DependentUpon>RenamePopUp.xaml</DependentUpon>
@@ -192,16 +183,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AreYouShurePopUp.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CredentialsViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DashboardPopUp.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DashboardView.xaml">
       <SubType>Designer</SubType>
@@ -212,10 +203,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditDashboardsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ErrorPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,21 +218,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RemoveDashboardPopUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\RemoveRowPopUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\RenamePopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RowPopUp.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\RowView.xaml">
       <SubType>Designer</SubType>

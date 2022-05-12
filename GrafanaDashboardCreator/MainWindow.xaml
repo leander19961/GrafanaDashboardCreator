@@ -29,25 +29,21 @@
             <Button Content="Create New Dashboard" HorizontalAlignment="Right" Margin="0,0,50,42" VerticalAlignment="Bottom" Click="CreateNewDashboardButton_OnClick" Width="180" Height="20"/>
             <Button Content="Add Datasource To Dashboard" HorizontalAlignment="Right" Margin="0,0,50,23" VerticalAlignment="Bottom" Click="AddDatasourceToDashboardButton_OnClick" Width="180" Height="20"/>
 
-            <Button Content="Remove Datasource From Dashboard" HorizontalAlignment="Right" Margin="0,0,455,23" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveDatasourceFromDashboardButton_OnCLick"/>
-            <Button Content="Remove Dashboard" HorizontalAlignment="Right" Margin="0,0,455,42" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveSelectedDashboardButton_OnCLick"/>
-            <Button Content="Remove Row" HorizontalAlignment="Right" Margin="0,0,455,61" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveSelectedRowButton_OnCLick"/>
-            <Button Content="Create JSON Output" HorizontalAlignment="Left" Margin="300,0,0,81" VerticalAlignment="Bottom" Click="CreateExportJSONButton_OnClick" Height="20" Width="180"/>
+            <Button Content="Remove Datasource From Dashboard" HorizontalAlignment="Right" Margin="0,0,450,23" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveDatasourceFromDashboardButton_OnCLick"/>
+            <Button Content="Create JSON Output" HorizontalAlignment="Left" Margin="50,0,0,81" VerticalAlignment="Bottom" Click="CreateExportJSONButton_OnClick" Height="20" Width="180"/>
 
-            <Button Content="Set Template For Datasource" HorizontalAlignment="Right" Margin="0,0,240,23" VerticalAlignment="Bottom" Click="SetTemplateForDatasourceButton_OnCLick" Height="20" Width="205"/>
-            <Button Content="Rename Selected Dashboard" HorizontalAlignment="Right" Margin="0,0,240,42" VerticalAlignment="Bottom" Click="RenameSelectedDashboardButton_OnClick" Height="20" Width="205"/>
-            <Button Content="Rename Selected Row" HorizontalAlignment="Right" Margin="0,0,240,61" VerticalAlignment="Bottom" Click="RenameSelectedRowButton_OnClick" Height="20" Width="205"/>
-            <Button Content="Add Special Datasource" HorizontalAlignment="Right" Margin="0,0,240,80" VerticalAlignment="Bottom" Height="20" Width="205" Click="AddSpecialDatasourceButton_OnCLick"/>
+            <Button Content="Set Template For Datasource" HorizontalAlignment="Right" Margin="0,0,240,23" VerticalAlignment="Bottom" Click="SetTemplateForDatasourceButton_OnCLick" Height="20" Width="200"/>
+            <Button Content="Add Special Datasource" HorizontalAlignment="Right" Margin="0,0,240,42" VerticalAlignment="Bottom" Height="20" Width="200" Click="AddSpecialDatasourceButton_OnCLick"/>
 
-            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="300,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
+            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
             <Button Content="Get New Template" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Click="GetNewTemplateButton_OnCLick" Height="20" Width="180" Visibility="Hidden"/>
-            <Button Content="Move Down Selected Datasources" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="190"/>
-            <Button Content="Move Up Selected Datasources" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Height="20" Width="190" Click="MoveUpSelectedDatasources_OnClick"/>
-            <Button Content="Move Left Selected Row" HorizontalAlignment="Left" Margin="50,0,0,81" VerticalAlignment="Bottom" Width="190" Height="20" Click="MoveLeftSelectedRowButton_OnClick"/>
-            <Button Content="Move Right Selected Row" HorizontalAlignment="Left" Margin="50,0,0,100" VerticalAlignment="Bottom" Width="190" Height="20" Click="MoveRightSelectedRowButton_OnClick"/>
-            <Button Content="Open Credentials Viewer" HorizontalAlignment="Left" Margin="300,0,0,42" VerticalAlignment="Bottom" Width="180" Height="20" Click="OpenCredentialsViewer_OnClick"/>
-            <Button Content="POST Dashboards" HorizontalAlignment="Left" Margin="300,0,0,100" VerticalAlignment="Bottom" Height="20" Width="180" Click="PostDashboardsButton_OnClick"/>
-            <Button Content="Edit Dashboards" HorizontalAlignment="Left" Margin="547,37,0,0" VerticalAlignment="Top" Click="EditDashboardsButton_OnClick"/>
+            <Button Content="Move Down Selected Datasources" HorizontalAlignment="Right" Margin="0,0,240,81" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="200"/>
+            <Button Content="Move Up Selected Datasources" HorizontalAlignment="Right" Margin="0,0,240,100" VerticalAlignment="Bottom" Height="20" Width="200" Click="MoveUpSelectedDatasources_OnClick"/>
+            <Button Content="Move Left Selected Row" HorizontalAlignment="Right" Margin="0,0,450,81" VerticalAlignment="Bottom" Width="205" Height="20" Click="MoveLeftSelectedRowButton_OnClick"/>
+            <Button Content="Move Right Selected Row" HorizontalAlignment="Right" Margin="0,0,450,100" VerticalAlignment="Bottom" Width="205" Height="20" Click="MoveRightSelectedRowButton_OnClick"/>
+            <Button Content="Open Credentials Viewer" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Width="180" Height="20" Click="OpenCredentialsViewer_OnClick"/>
+            <Button Content="POST Dashboards" HorizontalAlignment="Left" Margin="50,0,0,100" VerticalAlignment="Bottom" Height="20" Width="180" Click="PostDashboardsButton_OnClick"/>
+            <Button Content="Edit Dashboards" HorizontalAlignment="Right" Margin="0,0,450,42" VerticalAlignment="Bottom" Click="EditDashboardsButton_OnClick" Width="205" Height="20"/>
         </Grid>
     </Grid>
 </Window>

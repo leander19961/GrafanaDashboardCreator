@@ -46,6 +46,7 @@ namespace GrafanaDashboardCreator.Net
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return result;
@@ -80,6 +81,7 @@ namespace GrafanaDashboardCreator.Net
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return result;
@@ -114,6 +116,7 @@ namespace GrafanaDashboardCreator.Net
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return result;
@@ -147,6 +150,7 @@ namespace GrafanaDashboardCreator.Net
                 }
 
                 HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
                 string response = "";
                 using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {

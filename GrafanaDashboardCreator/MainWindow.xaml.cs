@@ -30,7 +30,7 @@ namespace GrafanaDashboardCreator
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly ModelService modelService;
+        private readonly ModelService modelService;
 
         public MainWindow()
         {
@@ -206,57 +206,6 @@ namespace GrafanaDashboardCreator
             }
 
             row.LinkedListView.Items.Refresh();
-        }
-
-        private void RemoveSelectedDashboardButton_OnCLick(object sender, RoutedEventArgs e)
-        {
-            RemoveDashboardPopUp popUp = new RemoveDashboardPopUp(modelService.GetDashboards())
-            {
-                Owner = this
-            };
-            popUp.ShowDialog();
-
-            if (!popUp.ButtonPressed)
-            {
-                return;
-            }
-
-            Dashboard dashboard = popUp.SelectedDashboard;
-
-            if (dashboard == null)
-            {
-                return; //TODO
-            }
-
-            MainTabControl.Items.Remove(dashboard.LinkedTabItem);
-            MainTabControl.Items.Refresh();
-            modelService.RemoveDashboard(dashboard);
-        }
-
-        private void RemoveSelectedRowButton_OnCLick(object sender, RoutedEventArgs e)
-        {
-            RemoveRowPopUp popUp = new RemoveRowPopUp(modelService.GetDashboards())
-            {
-                Owner = this
-            };
-            popUp.ShowDialog();
-
-            if (!popUp.ButtonPressed)
-            {
-                return;
-            }
-
-            Row row = popUp.SelectedRow;
-
-            if (row == null)
-            {
-                return; //TODO
-            }
-
-            Dashboard dashboard = popUp.SelectedDashboard;
-            dashboard.LinkedTabControl.Items.Remove(row.LinkedTabItem);
-            dashboard.LinkedTabControl.Items.Refresh();
-            modelService.RemoveRow(row);
         }
 
         private void RemoveDatasourceFromDashboardButton_OnCLick(object sender, RoutedEventArgs e)
@@ -442,63 +391,6 @@ namespace GrafanaDashboardCreator
             }
 
             selectedListview.Items.Refresh();
-        }
-
-        private void RenameSelectedDashboardButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Dashboard dashboard = modelService.GetDashboardByTabItem(MainTabControl.SelectedItem as TabItem);
-
-            if (dashboard == null)
-            {
-                return; //TODO
-            }
-
-            RenamePopUp popUp = new RenamePopUp
-            {
-                Owner = this
-            };
-            popUp.ShowDialog();
-
-            if (!popUp.ButtonPressed)
-            {
-                return;
-            }
-
-            dashboard.Name = popUp.EnteredText;
-            MainTabControl.Items.Refresh();
-        }
-
-        private void RenameSelectedRowButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if ((MainTabControl.SelectedItem as TabItem).Name.Equals("DatasourceTabItem"))
-            {
-                return;
-            }
-
-            DashboardView dashboardView = ((MainTabControl.SelectedItem as TabItem).Content as Frame).Content as DashboardView;
-            TabControl dashboardViewTabControl = dashboardView.FindName("DashboardTabControl") as TabControl;
-
-            if ((dashboardViewTabControl.SelectedItem as TabItem).Name.Equals("FreeSpaceRow"))
-            {
-                return;
-            }
-
-            TabItem rowTabItem = dashboardViewTabControl.SelectedItem as TabItem;
-            Row row = modelService.GetRowByTabItem(rowTabItem);
-
-            RenamePopUp popUp = new RenamePopUp
-            {
-                Owner = this
-            };
-            popUp.ShowDialog();
-
-            if (!popUp.ButtonPressed)
-            {
-                return;
-            }
-
-            row.Name = popUp.EnteredText;
-            dashboardViewTabControl.Items.Refresh();
         }
 
         private void AddSpecialDatasourceButton_OnCLick(object sender, RoutedEventArgs e)
