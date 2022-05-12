@@ -47,6 +47,7 @@
             <Button Content="Move Right Selected Row" HorizontalAlignment="Left" Margin="50,0,0,100" VerticalAlignment="Bottom" Width="190" Height="20" Click="MoveRightSelectedRowButton_OnClick"/>
             <Button Content="Open Credentials Viewer" HorizontalAlignment="Left" Margin="300,0,0,42" VerticalAlignment="Bottom" Width="180" Height="20" Click="OpenCredentialsViewer_OnClick"/>
             <Button Content="POST Dashboards" HorizontalAlignment="Left" Margin="300,0,0,100" VerticalAlignment="Bottom" Height="20" Width="180" Click="PostDashboardsButton_OnClick"/>
+            <Button Content="Edit Dashboards" HorizontalAlignment="Left" Margin="547,37,0,0" VerticalAlignment="Top" Click="EditDashboardsButton_OnClick"/>
         </Grid>
     </Grid>
 </Window>

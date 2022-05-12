@@ -632,5 +632,21 @@ namespace GrafanaDashboardCreator
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void EditDashboardsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            EditDashboardsView view = new EditDashboardsView(modelService)
+            {
+                Owner = this
+            };
+            view.ShowDialog();
+
+            MainTabControl.Items.Refresh();
+
+            foreach (Dashboard dashboard in modelService.GetDashboards())
+            {
+                dashboard.LinkedTabControl.Items.Refresh();
+            }
+        }
     }
 }

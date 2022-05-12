@@ -126,6 +126,9 @@
     <Compile Include="View\EditCredentialsPopUp.xaml.cs">
       <DependentUpon>EditCredentialsPopUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\EditDashboardsView.xaml.cs">
+      <DependentUpon>EditDashboardsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ErrorPopUp.xaml.cs">
       <DependentUpon>ErrorPopUp.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditCredentialsPopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditDashboardsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

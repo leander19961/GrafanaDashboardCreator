@@ -1,0 +1,23 @@
+﻿<Window x:Class="GrafanaDashboardCreator.View.EditDashboardsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafanaDashboardCreator.View"
+        mc:Ignorable="d"
+        Title="EditDashboardsView" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <ListView x:Name="RowsListView" VerticalAlignment="Stretch" Margin="0,0,0,100" SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Row Name" Width="300" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Dashboard Name" Width="300" DisplayMemberBinding="{Binding Dashboard}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Delete Row" HorizontalAlignment="Center" Margin="0,375,300,0" VerticalAlignment="Center" Height="20" Width="130" Click="DeleteRowButton_OnClick"/>
+        <Button Content="Delete Dashboard" HorizontalAlignment="Center" Margin="0,375,600,0" VerticalAlignment="Center" Height="20" Width="130" Click="DeleteDashboardButton_OnClick"/>
+        <Button Content="Rename Row" HorizontalAlignment="Center" Margin="300,375,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="RenameRowButton_OnClick"/>
+        <Button Content="Rename Dashboard" HorizontalAlignment="Center" Margin="600,375,0,0" VerticalAlignment="Center" Height="20" Width="130" Click="RenameDashboardButton_OnClick"/>
+    </Grid>
+</Window>
