@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrafanaDashboardCreator.View"
         mc:Ignorable="d"
-        Title="AreYouShurePopUp" Height="150" Width="300">
+        Title="AreYouShurePopUp" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
     <Grid>
         <Label x:Name="MessageLabel" Content="Are you shure about?" HorizontalAlignment="Center" Margin="0,0,0,50" VerticalAlignment="Center"/>
         <Button Content="Continue" HorizontalAlignment="Center" Margin="0,50,100,0" VerticalAlignment="Center" Width="60" Click="ContinueButton_Click"/>

@@ -31,7 +31,24 @@ namespace GrafanaDashboardCreator.View
         public SelectGrafanaFolderPopUp()
         {
             InitializeComponent();
-            FolderSelectBox.ItemsSource = JSONParser.GetFolders(RESTAPI.GETFoldersFromGrafana());
+
+            try
+            {
+                string foldersJSON = RESTAPI.GETFoldersFromGrafana();
+
+                if (foldersJSON == null || foldersJSON == "")
+                {
+                    MessageBox.Show("GET request to Grafana failed!", "Error!");
+                    return;
+                }
+
+                FolderSelectBox.ItemsSource = JSONParser.GetFolders(foldersJSON);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.StackTrace);
+            }
         }
 
         private void SelectFolderButton_Click(object sender, RoutedEventArgs e)

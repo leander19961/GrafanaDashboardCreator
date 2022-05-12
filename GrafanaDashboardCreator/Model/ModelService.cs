@@ -22,6 +22,7 @@ namespace GrafanaDashboardCreator.Model
         private List<Datasource> datasources;
         private List<Template> templates;
         private List<Node> nodes;
+        private Folder standardFolder;
 
         public ModelService()
         {
@@ -30,6 +31,7 @@ namespace GrafanaDashboardCreator.Model
             dashboards = new List<Dashboard>();
             datasources = new List<Datasource>();
             templates = LoadTemplates();
+            standardFolder = new Folder("General", null, null);
         }
 
         public ObservableList<Dashboard> GetDashboards()
@@ -138,7 +140,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Dashboard CreateDashboard(string name, TabItem tabItem, TabControl tabControl)
         {
-            Dashboard newDashBoard = new Dashboard(name, tabItem, tabControl);
+            Dashboard newDashBoard = new Dashboard(name, tabItem, tabControl, standardFolder);
 
             dashboards.Add(newDashBoard);
 

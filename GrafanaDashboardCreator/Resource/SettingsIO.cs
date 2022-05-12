@@ -11,6 +11,7 @@ using GrafanaDashboardCreator.Model;
 using GrafanaDashboardCreator.Parser;
 
 using static GrafanaDashboardCreator.Resource.Constants;
+using System.Windows;
 
 namespace GrafanaDashboardCreator.Resource
 {
@@ -100,7 +101,10 @@ namespace GrafanaDashboardCreator.Resource
             {
                 templateXml.Save(PanelTemplateDirectory + "\\" + template.Name + ".xml");
             }
-            catch { } //TODO
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
         }
 
         internal static List<Template> LoadTemplates()
@@ -109,7 +113,11 @@ namespace GrafanaDashboardCreator.Resource
 
             foreach (string file in Directory.GetFiles(PanelTemplateDirectory))
             {
-                templates.Add(LoadTemplate(file));
+                Template tmp = LoadTemplate(file);
+                if (tmp != null)
+                {
+                    templates.Add(tmp);
+                }
             }
 
             return templates;
@@ -117,15 +125,23 @@ namespace GrafanaDashboardCreator.Resource
 
         internal static Template LoadTemplate(string path)
         {
-            XmlDocument templateXml = XMLParser.GetXMLDocumentFromFile(path);
-            XmlNode xmlNode = templateXml.DocumentElement;
+            try
+            {
+                XmlDocument templateXml = XMLParser.GetXMLDocumentFromFile(path);
+                XmlNode xmlNode = templateXml.DocumentElement;
 
-            string name = xmlNode.Attributes.GetNamedItem("Name").Value;
-            bool replaceNodeID = bool.Parse(xmlNode.Attributes.GetNamedItem("ReplaceNodeID").Value);
-            bool replaceResourceID = bool.Parse(xmlNode.Attributes.GetNamedItem("ReplaceResourceID").Value);
-            string jsonText = JObject.Parse(templateXml.GetElementsByTagName("jsonText").Item(0).InnerText).ToString();
+                string name = xmlNode.Attributes.GetNamedItem("Name").Value;
+                bool replaceNodeID = bool.Parse(xmlNode.Attributes.GetNamedItem("ReplaceNodeID").Value);
+                bool replaceResourceID = bool.Parse(xmlNode.Attributes.GetNamedItem("ReplaceResourceID").Value);
+                string jsonText = JObject.Parse(templateXml.GetElementsByTagName("jsonText").Item(0).InnerText).ToString();
 
-            return new Template(name, jsonText, replaceNodeID, replaceResourceID);
+                return new Template(name, jsonText, replaceNodeID, replaceResourceID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+                return null;
+            }
         }
     }
 }

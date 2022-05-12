@@ -275,6 +275,7 @@ namespace GrafanaDashboardCreator.Parser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return dashboardJSON;
@@ -282,32 +283,42 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static JObject CreateFolderUploadJSON(Dashboard dashboard)
         {
-            string dashboardJSONstring = CreateNewDashboardJSON(dashboard).ToString();
-            string folderJSONstring = "";
-            using (StreamReader r = new StreamReader(FolderJSONFilePath))
+            JObject folderJSON = null;
+
+            try
             {
-                folderJSONstring = r.ReadToEnd();
+                string dashboardJSONstring = CreateNewDashboardJSON(dashboard).ToString();
+                string folderJSONstring = "";
+                using (StreamReader r = new StreamReader(FolderJSONFilePath))
+                {
+                    folderJSONstring = r.ReadToEnd();
+                }
+
+                JObject dashboardJSON = JObject.Parse(dashboardJSONstring);
+
+                folderJSON = JObject.Parse(folderJSONstring);
+                foreach (JProperty property in folderJSON.Properties())
+                {
+                    if (property.Name.Equals(JSONFolderDashboardPropertyName))
+                    {
+                        property.Value = dashboardJSON;
+                    }
+
+                    if (property.Name.Equals(JSONFolderFolderIDPropertyName) && dashboard.Folder.ID != null)
+                    {
+                        property.Value = int.Parse(dashboard.Folder.ID);
+                    }
+
+                    if (property.Name.Equals(JSONFolderFolderUIDPropertyName) && dashboard.Folder.Uid != null)
+                    {
+                        property.Value = dashboard.Folder.Uid;
+                    }
+                }
             }
-
-            JObject dashboardJSON = JObject.Parse(dashboardJSONstring);
-
-            JObject folderJSON = JObject.Parse(folderJSONstring);
-            foreach (JProperty property in folderJSON.Properties())
+            catch (Exception ex)
             {
-                if (property.Name.Equals(JSONFolderDashboardPropertyName))
-                {
-                    property.Value = dashboardJSON;
-                }
-
-                if (property.Name.Equals(JSONFolderFolderIDPropertyName))
-                {
-                    property.Value = int.Parse(dashboard.Folder.ID);
-                }
-
-                if (property.Name.Equals(JSONFolderFolderUIDPropertyName))
-                {
-                    property.Value = dashboard.Folder.Uid;
-                }
+                MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return folderJSON;
@@ -445,30 +456,39 @@ namespace GrafanaDashboardCreator.Parser
         internal static List<Folder> GetFolders(string json)
         {
             List<Folder> folders = new List<Folder>();
-            JArray foldersJson = JArray.Parse(json);
 
-            foreach (JObject folder in foldersJson.Children())
+            try
             {
-                string title = "";
-                string id = "";
-                string uid = "";
-                foreach (JProperty folder_property in folder.Properties())
-                {
-                    if (folder_property.Name.Equals(JSONFolderTitlePropertyName))
-                    {
-                        title = folder_property.Value.ToString();
-                    }
-                    if (folder_property.Name.Equals(JSONFolderIDPropertyName))
-                    {
-                        id = folder_property.Value.ToString();
-                    }
-                    if (folder_property.Name.Equals(JSONFolderUIDPropertyName))
-                    {
-                        uid = folder_property.Value.ToString();
-                    }
-                }
+                JArray foldersJson = JArray.Parse(json);
 
-                folders.Add(new Folder(title, id, uid));
+                foreach (JObject folder in foldersJson.Children())
+                {
+                    string title = "";
+                    string id = "";
+                    string uid = "";
+                    foreach (JProperty folder_property in folder.Properties())
+                    {
+                        if (folder_property.Name.Equals(JSONFolderTitlePropertyName))
+                        {
+                            title = folder_property.Value.ToString();
+                        }
+                        if (folder_property.Name.Equals(JSONFolderIDPropertyName))
+                        {
+                            id = folder_property.Value.ToString();
+                        }
+                        if (folder_property.Name.Equals(JSONFolderUIDPropertyName))
+                        {
+                            uid = folder_property.Value.ToString();
+                        }
+                    }
+
+                    folders.Add(new Folder(title, id, uid));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return folders;

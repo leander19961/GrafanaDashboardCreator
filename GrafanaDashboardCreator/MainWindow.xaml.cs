@@ -44,7 +44,15 @@ namespace GrafanaDashboardCreator
         {
             try
             {
-                XMLParser.GetNodesFromXML(modelService, RESTAPI.GETNodesFromOpenNMS());
+                string nodesXML = RESTAPI.GETNodesFromOpenNMS();
+
+                if (nodesXML == null || nodesXML == "")
+                {
+                    MessageBox.Show("GET request to OpenNMS failed!", "Error!");
+                    return;
+                }
+
+                XMLParser.GetNodesFromXML(modelService, nodesXML);
 
                 SelectNodePopUp popUp = new SelectNodePopUp(modelService.GetNodes())
                 {
@@ -60,9 +68,10 @@ namespace GrafanaDashboardCreator
 
                 string resourcesXML = RESTAPI.GETResourcesFromOpenNMS(popUp.SelectedNode.NodeForeignSource + ":" + popUp.SelectedNode.NodeForeignID);
 
-                if (resourcesXML == null)
+                if (resourcesXML == null || resourcesXML == "")
                 {
-                    resourcesXML = "Null";
+                    MessageBox.Show("GET request to OpenNMS failed!", "Error!");
+                    return;
                 }
 
                 XMLParser.GetResourcesFromXML(modelService, resourcesXML);
@@ -176,11 +185,6 @@ namespace GrafanaDashboardCreator
 
         private void AddDatasourceToDashboardButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if ((MainTabControl.SelectedItem as TabItem).Name != "DatasourceTabItem")
-            {
-                return;
-            }
-
             AddToDashboardPopUp addToDashboardPopUp = new AddToDashboardPopUp(modelService.GetDashboards())
             {
                 Owner = this
@@ -192,7 +196,6 @@ namespace GrafanaDashboardCreator
                 return;
             }
 
-            //Dashboard dashboard = addToDashboardPopUp.SelectedDashboard;
             Row row = addToDashboardPopUp.SelectedRow;
 
             if (row == null)
@@ -210,6 +213,17 @@ namespace GrafanaDashboardCreator
 
         private void RemoveDatasourceFromDashboardButton_OnCLick(object sender, RoutedEventArgs e)
         {
+            AreYouShurePopUp popUp = new AreYouShurePopUp("Delete these Datasources?")
+            {
+                Owner = this
+            };
+            popUp.ShowDialog();
+
+            if (!popUp.ButtonPressed)
+            {
+                return;
+            }
+
             if ((MainTabControl.SelectedItem as TabItem).Equals(DatasourceTabItem))
             {
                 foreach (Datasource dataSource in DatasourceListView.SelectedItems)
@@ -538,6 +552,24 @@ namespace GrafanaDashboardCreator
             foreach (Dashboard dashboard in modelService.GetDashboards())
             {
                 dashboard.LinkedTabControl.Items.Refresh();
+            }
+        }
+
+        private void ShowHideMoveButton_OnCLick(object sender, RoutedEventArgs e)
+        {
+            if (MoveDownSelectedDatasources.Visibility == Visibility.Visible)
+            {
+                MoveDownSelectedDatasources.Visibility = Visibility.Hidden;
+                MoveUpSelectedDatasources.Visibility = Visibility.Hidden;
+                MoveLeftSelectedRow.Visibility = Visibility.Hidden;
+                MoveRightSelectedRow.Visibility = Visibility.Hidden;
+            }
+            else if (MoveDownSelectedDatasources.Visibility == Visibility.Hidden)
+            {
+                MoveDownSelectedDatasources.Visibility = Visibility.Visible;
+                MoveUpSelectedDatasources.Visibility = Visibility.Visible;
+                MoveLeftSelectedRow.Visibility = Visibility.Visible;
+                MoveRightSelectedRow.Visibility = Visibility.Visible;
             }
         }
     }

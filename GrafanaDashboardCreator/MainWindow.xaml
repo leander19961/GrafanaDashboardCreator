@@ -24,26 +24,28 @@
             </TabItem>
         </TabControl>
         <Grid Height="150" VerticalAlignment="Bottom">
-            <Button Content="Get Resources" HorizontalAlignment="Right" Margin="0,0,50,80" VerticalAlignment="Bottom" Click="GetDatasourcesButton_OnClick" Width="180" Height="20"/>
-            <Button Content="Create New Row" HorizontalAlignment="Right" Margin="0,0,50,61" VerticalAlignment="Bottom" Click="CreateNewRowButton_OnClick" Width="180" Height="20"/>
-            <Button Content="Create New Dashboard" HorizontalAlignment="Right" Margin="0,0,50,42" VerticalAlignment="Bottom" Click="CreateNewDashboardButton_OnClick" Width="180" Height="20"/>
-            <Button Content="Add Datasource To Dashboard" HorizontalAlignment="Right" Margin="0,0,50,23" VerticalAlignment="Bottom" Click="AddDatasourceToDashboardButton_OnClick" Width="180" Height="20"/>
+            <Button Content="GET Resources" HorizontalAlignment="Right" Margin="0,0,50,61" VerticalAlignment="Bottom" Click="GetDatasourcesButton_OnClick" Width="180" Height="20"/>
+            <Button Content="Create New Row" HorizontalAlignment="Right" Margin="0,0,50,42" VerticalAlignment="Bottom" Click="CreateNewRowButton_OnClick" Width="180" Height="20"/>
+            <Button Content="Create New Dashboard" HorizontalAlignment="Right" Margin="0,0,50,23" VerticalAlignment="Bottom" Click="CreateNewDashboardButton_OnClick" Width="180" Height="20"/>
+            <Button Content="Add Datasource To Dashboard" HorizontalAlignment="Right" Margin="0,0,240,23" VerticalAlignment="Bottom" Click="AddDatasourceToDashboardButton_OnClick" Width="180" Height="20"/>
 
-            <Button Content="Remove Datasource From Dashboard" HorizontalAlignment="Right" Margin="0,0,450,23" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveDatasourceFromDashboardButton_OnCLick"/>
+            <Button Content="Edit Dashboards" HorizontalAlignment="Right" Margin="0,0,430,42" VerticalAlignment="Bottom" Click="EditDashboardsButton_OnClick" Width="205" Height="20"/>
+            <Button Content="Remove Datasource From Dashboard" HorizontalAlignment="Right" Margin="0,0,430,23" VerticalAlignment="Bottom" Height="20" Width="205" Click="RemoveDatasourceFromDashboardButton_OnCLick"/>
+
+            <Button Content="Add Special Datasource" HorizontalAlignment="Right" Margin="0,0,240,61" VerticalAlignment="Bottom" Height="20" Width="180" Click="AddSpecialDatasourceButton_OnCLick"/>
+            <Button Content="Set Template For Datasource" HorizontalAlignment="Right" Margin="0,0,240,42" VerticalAlignment="Bottom" Click="SetTemplateForDatasourceButton_OnCLick" Height="20" Width="180"/>
+
+            <Button x:Name="MoveRightSelectedRow" Content="Move Right Selected Row" HorizontalAlignment="Left" Margin="300,0,0,99" VerticalAlignment="Bottom" Width="200" Height="20" Click="MoveRightSelectedRowButton_OnClick" Visibility="Hidden"/>
+            <Button x:Name="MoveLeftSelectedRow" Content="Move Left Selected Row" HorizontalAlignment="Left" Margin="300,0,0,80" VerticalAlignment="Bottom" Width="200" Height="20" Click="MoveLeftSelectedRowButton_OnClick" Visibility="Hidden"/>
+            <Button Content="Show/Hide Move Buttons" HorizontalAlignment="Left" Margin="300,0,0,61" VerticalAlignment="Bottom" Width="200" Height="20" Click="ShowHideMoveButton_OnCLick"/>
+            <Button x:Name="MoveUpSelectedDatasources" Content="Move Up Selected Datasources" HorizontalAlignment="Left" Margin="300,0,0,42" VerticalAlignment="Bottom" Height="20" Width="200" Click="MoveUpSelectedDatasources_OnClick" Visibility="Hidden"/>
+            <Button x:Name="MoveDownSelectedDatasources" Content="Move Down Selected Datasources" HorizontalAlignment="Left" Margin="300,0,0,23" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="200" Visibility="Hidden"/>
+
             <Button Content="Create JSON Output" HorizontalAlignment="Left" Margin="50,0,0,81" VerticalAlignment="Bottom" Click="CreateExportJSONButton_OnClick" Height="20" Width="180"/>
-
-            <Button Content="Set Template For Datasource" HorizontalAlignment="Right" Margin="0,0,240,23" VerticalAlignment="Bottom" Click="SetTemplateForDatasourceButton_OnCLick" Height="20" Width="200"/>
-            <Button Content="Add Special Datasource" HorizontalAlignment="Right" Margin="0,0,240,42" VerticalAlignment="Bottom" Height="20" Width="200" Click="AddSpecialDatasourceButton_OnCLick"/>
-
-            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
             <Button Content="Get New Template" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Click="GetNewTemplateButton_OnCLick" Height="20" Width="180" Visibility="Hidden"/>
-            <Button Content="Move Down Selected Datasources" HorizontalAlignment="Right" Margin="0,0,240,81" VerticalAlignment="Bottom" Click="MoveDownSelectedDatasources_OnClick" Height="20" Width="200"/>
-            <Button Content="Move Up Selected Datasources" HorizontalAlignment="Right" Margin="0,0,240,100" VerticalAlignment="Bottom" Height="20" Width="200" Click="MoveUpSelectedDatasources_OnClick"/>
-            <Button Content="Move Left Selected Row" HorizontalAlignment="Right" Margin="0,0,450,81" VerticalAlignment="Bottom" Width="205" Height="20" Click="MoveLeftSelectedRowButton_OnClick"/>
-            <Button Content="Move Right Selected Row" HorizontalAlignment="Right" Margin="0,0,450,100" VerticalAlignment="Bottom" Width="205" Height="20" Click="MoveRightSelectedRowButton_OnClick"/>
             <Button Content="Open Credentials Viewer" HorizontalAlignment="Left" Margin="50,0,0,42" VerticalAlignment="Bottom" Width="180" Height="20" Click="OpenCredentialsViewer_OnClick"/>
             <Button Content="POST Dashboards" HorizontalAlignment="Left" Margin="50,0,0,100" VerticalAlignment="Bottom" Height="20" Width="180" Click="PostDashboardsButton_OnClick"/>
-            <Button Content="Edit Dashboards" HorizontalAlignment="Right" Margin="0,0,450,42" VerticalAlignment="Bottom" Click="EditDashboardsButton_OnClick" Width="205" Height="20"/>
+            <Button Content="Open Template Viewer" HorizontalAlignment="Left" Margin="50,0,0,23" VerticalAlignment="Bottom" Click="OpenTempalteViewerButton_OnClick" Height="20" Width="180"/>
         </Grid>
     </Grid>
 </Window>

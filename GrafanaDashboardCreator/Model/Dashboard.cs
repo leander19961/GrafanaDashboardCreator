@@ -44,12 +44,13 @@ namespace GrafanaDashboardCreator.Model
             }
         }
 
-        public Dashboard(string name, TabItem tabItem, TabControl tabControl)
+        public Dashboard(string name, TabItem tabItem, TabControl tabControl, Folder folder)
         {
             _name = name;
             _rows = new List<Row>();
             _linkedTabItem = tabItem;
             _linkedTabControl = tabControl;
+            _folder = folder;
         }
 
         public Dashboard WithRows(Row value)

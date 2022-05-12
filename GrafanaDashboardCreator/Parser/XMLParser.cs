@@ -59,6 +59,7 @@ namespace GrafanaDashboardCreator.Parser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
         }
 
@@ -96,6 +97,7 @@ namespace GrafanaDashboardCreator.Parser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return result;
@@ -119,15 +121,10 @@ namespace GrafanaDashboardCreator.Parser
                     modelService.CreateNode(label, nodeID, nodeForeignID, nodeForeignSource);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                JSONViewer viewer = new JSONViewer(e.ToString() + "\n" + e.StackTrace)
-                {
-                    Title = "Error!",
-                    Owner = App.Current.MainWindow
-                };
-
-                viewer.Show();
+                MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
         }
 
@@ -153,6 +150,7 @@ namespace GrafanaDashboardCreator.Parser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return result;
@@ -181,6 +179,7 @@ namespace GrafanaDashboardCreator.Parser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error!");
+                MessageBox.Show(ex.StackTrace, "Error!");
             }
 
             return null;
