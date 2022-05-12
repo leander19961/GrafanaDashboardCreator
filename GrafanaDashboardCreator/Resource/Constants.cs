@@ -24,6 +24,7 @@ namespace GrafanaDashboardCreator.Resource
         //JSON
         internal static readonly string DashboardJSONFilePath = Path.Combine(TemplateDirectory + "\\emptydashboard.json");
         internal static readonly string RowJSONFilePath = Path.Combine(TemplateDirectory + "\\emptyrow.json");
+        internal static readonly string FolderJSONFilePath = Path.Combine(TemplateDirectory + "\\emptyfolder.json");
         //Credentials
         internal static readonly string OpenNMSCredentailsFilePath = Path.Combine(CredentialsDirectory + "\\opennms.xml");
         internal static readonly string GrafanaCredentailsFilePath = Path.Combine(CredentialsDirectory + "\\grafana.xml");
@@ -42,6 +43,10 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string RESTGrafanaPOSTDashboardURL = RESTGrafanaAPIURL + "/dashboards/db";
 
         //Constants for JSONParse
+        //Folder
+        internal static readonly string JSONFolderDashboardPropertyName = "dashboard";
+        internal static readonly string JSONFolderFolderIDPropertyName = "folderId";
+        internal static readonly string JSONFolderFolderUIDPropertyName = "folderUid";
         //Dashboard
         internal static readonly string JSONDashboardTitlePropertyName = "title";
         internal static readonly string JSONDashboardPanelsPropertyName = "panels";
@@ -71,6 +76,9 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string JSONGridPosPropertyY = "y";
         internal static readonly string JSONGridPosPropertyW = "w";
         internal static readonly string JSONGridPosPropertyH = "h";
+        //Response
+        internal static readonly string JSONResponsePropertyStatus = "status";
+        internal static readonly string JSONResponsePropertyStatusSuccess = "success";
 
         //ReplacePattern
         internal static readonly string ReplacePatternRESTNodeID = "§NodeID§";
@@ -78,5 +86,6 @@ namespace GrafanaDashboardCreator.Resource
         //JSONTemplates
         internal static readonly string EmptyRowJSON = "{  \"collapsed\": true,  \"datasource\": null,  \"gridPos\": {    \"h\": 1,    \"w\": 24,    \"x\": 0,    \"y\": 0  },  \"id\": 4,  \"panels\": [],  \"title\": \"\",  \"type\": \"row\"}";
         internal static readonly string EmptyDashboardJSON = "{  \"annotations\": {    \"list\": [      {        \"builtIn\": 1,        \"datasource\": \"-- Grafana --\",        \"enable\": true,        \"hide\": true,        \"iconColor\": \"rgba(0, 211, 255, 1)\",        \"name\": \"Annotations & Alerts\",        \"type\": \"dashboard\"      }    ]  },  \"editable\": true,  \"gnetId\": null,  \"graphTooltip\": 0,  \"id\": null,  \"links\": [],  \"panels\": [],  \"schemaVersion\": 27,  \"style\": \"dark\",  \"tags\": [],  \"templating\": {    \"list\": []  },  \"time\": {    \"from\": \"now-6h\",    \"to\": \"now\"  },  \"timepicker\": {},  \"timezone\": \"\",  \"title\": \"testdashboard\",  \"uid\": null,  \"version\": 0}";
+        internal static readonly string EmptyFolderJSON = "{     \"dashboard\": {       \"id\": null,       \"uid\": null,       \"title\": \"Production Overview\",       \"tags\": [ \"templated\" ],       \"timezone\": \"browser\",       \"schemaVersion\": 16,       \"version\": 0,       \"refresh\": \"25s\"     },     \"folderId\": null,     \"folderUid\": null,     \"message\": \"Uploaded with GrafanaDashboardCreator\",     \"overwrite\": true   }";
     }
 }

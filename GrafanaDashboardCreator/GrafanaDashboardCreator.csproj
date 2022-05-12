@@ -132,6 +132,9 @@
     <Compile Include="View\GetNewTemplatePopUp.xaml.cs">
       <DependentUpon>GetNewTemplatePopUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\GrafanaPOSTView.xaml.cs">
+      <DependentUpon>GrafanaPOSTView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\JSONViewer.xaml.cs">
       <DependentUpon>JSONViewer.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\GrafanaPOSTView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\JSONViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -290,6 +297,7 @@
     </None>
     <None Include="Resource\Templates\emptydashboard.json" />
     <None Include="Resource\Templates\emptyrow.json" />
+    <None Include="Resource\Templates\emptyfolder.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -306,5 +314,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

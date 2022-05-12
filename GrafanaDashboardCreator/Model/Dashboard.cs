@@ -12,6 +12,7 @@ namespace GrafanaDashboardCreator.Model
     public class Dashboard : INotifyPropertyChanged
     {
         private string _name;
+        private Folder _folder;
         private List<Row> _rows;
         private readonly TabItem _linkedTabItem;
         private readonly TabControl _linkedTabControl;
@@ -29,6 +30,8 @@ namespace GrafanaDashboardCreator.Model
         public TabItem LinkedTabItem { get { return _linkedTabItem; } }
 
         public TabControl LinkedTabControl { get { return _linkedTabControl; } }
+
+        public Folder Folder { get { return _folder; } set { _folder = value; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

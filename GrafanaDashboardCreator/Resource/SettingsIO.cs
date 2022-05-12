@@ -45,6 +45,12 @@ namespace GrafanaDashboardCreator.Resource
                 File.WriteAllText(RowJSONFilePath, emptyRowJSON.ToString());
             }
 
+            if (!File.Exists(FolderJSONFilePath))
+            {
+                JObject emptyRowJSON = JObject.Parse(EmptyFolderJSON);
+                File.WriteAllText(FolderJSONFilePath, emptyRowJSON.ToString());
+            }
+
             if (!File.Exists(OpenNMSCredentailsFilePath))
             {
                 XmlDocument openNMSCredentials = new XmlDocument();

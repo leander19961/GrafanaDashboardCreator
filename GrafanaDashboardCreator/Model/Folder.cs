@@ -13,7 +13,7 @@ namespace GrafanaDashboardCreator.Model
         private string _uid;
 
         public string Title { get { return _title; } }
-        public string Id { get { return _id; } }
+        public string ID { get { return _id; } }
         public string Uid { get { return _uid; } }
 
         public Folder(string title, string id, string uid)

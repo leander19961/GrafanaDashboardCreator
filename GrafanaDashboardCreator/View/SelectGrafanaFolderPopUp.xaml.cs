@@ -1,4 +1,5 @@
-﻿using GrafanaDashboardCreator.Net;
+﻿using GrafanaDashboardCreator.Model;
+using GrafanaDashboardCreator.Net;
 using GrafanaDashboardCreator.Parser;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace GrafanaDashboardCreator.View
 
         public bool ButtonPressed { get { return _buttonPressed; } }
 
-        public string selectedFolder { get { return FolderSelectBox.SelectedItem as string; } }
+        public Folder SelectedFolder { get { return FolderSelectBox.SelectedItem as Folder; } }
 
         public SelectGrafanaFolderPopUp()
         {

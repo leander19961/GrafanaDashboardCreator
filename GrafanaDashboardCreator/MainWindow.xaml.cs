@@ -65,15 +65,6 @@ namespace GrafanaDashboardCreator
                     resourcesXML = "Null";
                 }
 
-                /* For debugging
-                JSONViewer viewer = new JSONViewer(resourcesXML)
-                {
-                    Owner = this
-                };
-
-                viewer.Show();
-                */
-
                 XMLParser.GetResourcesFromXML(modelService, resourcesXML);
                 DatasourceListView.ItemsSource = modelService.GetDatasources();
             }
@@ -376,6 +367,15 @@ namespace GrafanaDashboardCreator
             }
         }
 
+        private void PostDashboardsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            GrafanaPOSTView view = new GrafanaPOSTView(modelService)
+            {
+                Owner = this
+            };
+            view.Show();
+        }
+
         private void GetNewTemplateButton_OnCLick(object sender, RoutedEventArgs e)
         {
             GetNewTemplatePopUp popUp = new GetNewTemplatePopUp
@@ -626,45 +626,6 @@ namespace GrafanaDashboardCreator
                     Owner = this
                 };
                 viewer.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void PostDashboardsButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SelectDashboardPopUp popUp = new SelectDashboardPopUp(modelService.GetDashboards())
-                {
-                    Owner = this
-                };
-                popUp.ShowDialog();
-
-                if (!popUp.SingleSelectionButtonPressed && !popUp.MultiSelectionButtonPressed)
-                {
-                    return;
-                }
-
-                List<Dashboard> dashboards = popUp.SelectedDashboards;
-
-                SelectGrafanaFolderPopUp folderPopUp = new SelectGrafanaFolderPopUp()
-                {
-                    Owner = this
-                };
-                folderPopUp.ShowDialog();
-
-                if (!folderPopUp.ButtonPressed)
-                {
-                    return;
-                }
-
-                foreach (Dashboard dashboard in dashboards)
-                {
-                    //RESTAPI.POSTJsonToGrafana(JSONParser.CreateNewDashboardJSON(dashboard).ToString());
-                }
             }
             catch (Exception ex)
             {

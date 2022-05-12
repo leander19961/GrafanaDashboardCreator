@@ -280,6 +280,39 @@ namespace GrafanaDashboardCreator.Parser
             return dashboardJSON;
         }
 
+        internal static JObject CreateFolderUploadJSON(Dashboard dashboard)
+        {
+            string dashboardJSONstring = CreateNewDashboardJSON(dashboard).ToString();
+            string folderJSONstring = "";
+            using (StreamReader r = new StreamReader(FolderJSONFilePath))
+            {
+                folderJSONstring = r.ReadToEnd();
+            }
+
+            JObject dashboardJSON = JObject.Parse(dashboardJSONstring);
+
+            JObject folderJSON = JObject.Parse(folderJSONstring);
+            foreach (JProperty property in folderJSON.Properties())
+            {
+                if (property.Name.Equals(JSONFolderDashboardPropertyName))
+                {
+                    property.Value = dashboardJSON;
+                }
+
+                if (property.Name.Equals(JSONFolderFolderIDPropertyName))
+                {
+                    property.Value = int.Parse(dashboard.Folder.ID);
+                }
+
+                if (property.Name.Equals(JSONFolderFolderUIDPropertyName))
+                {
+                    property.Value = dashboard.Folder.Uid;
+                }
+            }
+
+            return folderJSON;
+        }
+
         internal static string GetTemplate(string templateTitle, string pathToJSON, bool replaceNodeID, bool replaceResourceID)
         {
             string inputJSONString;
@@ -408,7 +441,7 @@ namespace GrafanaDashboardCreator.Parser
 
             return newTemplate.ToString();
         }
-    
+
         internal static List<Folder> GetFolders(string json)
         {
             List<Folder> folders = new List<Folder>();
