@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrafanaDashboardCreator.View"
         mc:Ignorable="d"
-        Title="AddSpecialDatasourcePopUp" Height="250" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="AddSpecialDatasourcePopUp" Height="250" Width="425" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Label Content="Select Node:" HorizontalAlignment="Center" Margin="0,0,250,50" VerticalAlignment="Center"/>
-        <Label Content="Select a node and specifie the type of the new datasource" HorizontalAlignment="Center" Margin="0,0,0,150" VerticalAlignment="Center"/>
+        <Label Content="Select a node and enter a name and a resourceId for the new datasource" HorizontalAlignment="Center" Margin="0,0,0,150" VerticalAlignment="Center"/>
         <ComboBox x:Name="SelectNodeBox" HorizontalAlignment="Center" Margin="100,0,0,50" VerticalAlignment="Center" Width="200"/>
         <Label Content="Enter ResourceID:" HorizontalAlignment="Center" Margin="0,0,250,0" VerticalAlignment="Center"/>
         <Button Content="Add new datasource" HorizontalAlignment="Center" Margin="180,150,0,0" VerticalAlignment="Center" Width="120" Click="AddSpecialDataSourceButton_OnCLick"/>
