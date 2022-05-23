@@ -1,7 +1,7 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +25,12 @@ namespace GrafanaDashboardCreator.View
 
         public Dashboard SelectedDashboard { get { return SelectedDashboardBox.SelectedItem as Dashboard; } }
 
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
 
-        public RowPopUp(ObservableList<Dashboard> dashboards, Dashboard dashboard)
+        public RowPopUp(ObservableCollection<Dashboard> dashboards, Dashboard dashboard)
         {
             InitializeComponent();
             SelectedDashboardBox.ItemsSource = dashboards;
@@ -49,6 +50,7 @@ namespace GrafanaDashboardCreator.View
 
         private void RowNameBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 CreateRowButton_OnClick(sender, e);

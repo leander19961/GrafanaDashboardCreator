@@ -76,7 +76,8 @@ namespace GrafanaDashboardCreator.Resource
         internal static readonly string JSONGridPosPropertyY = "y";
         internal static readonly string JSONGridPosPropertyW = "w";
         internal static readonly string JSONGridPosPropertyH = "h";
-        //Response
+
+        //REST Response
         internal static readonly string JSONResponsePropertyStatus = "status";
         internal static readonly string JSONResponsePropertyStatusSuccess = "success";
 

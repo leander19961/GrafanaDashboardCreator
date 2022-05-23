@@ -1,7 +1,7 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +21,14 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class SetTemplatePopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
 
         public Template SelectedTemplate { get { return TemplateSelectBox.SelectedItem as Template; } }
 
-        public SetTemplatePopUp(ObservableList<Template> templates)
+        public SetTemplatePopUp(ObservableCollection<Template> templates)
         {
             InitializeComponent();
             TemplateSelectBox.ItemsSource = templates;

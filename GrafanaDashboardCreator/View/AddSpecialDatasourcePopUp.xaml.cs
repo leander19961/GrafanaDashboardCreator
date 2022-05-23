@@ -22,6 +22,7 @@ namespace GrafanaDashboardCreator.View
     {
         ModelService modelService;
 
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool _buttonPressed = false;
 
         public bool ButtonPressed { get { return _buttonPressed; } }
@@ -47,6 +48,7 @@ namespace GrafanaDashboardCreator.View
 
         private void NameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 AddSpecialDataSourceButton_OnCLick(sender, e);

@@ -1,5 +1,4 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +21,8 @@ namespace GrafanaDashboardCreator.View
     public partial class CredentialsViewer : Window
     {
         private ModelService modelService;
+
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool _buttonPressed = false;
 
         public bool ButtonPressed { get { return _buttonPressed; } }
@@ -67,7 +68,8 @@ namespace GrafanaDashboardCreator.View
 
         private void DeleteCredentialsButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            //Currently there is no need to delete credentials
+            //Can be used if needed
         }
     }
 }

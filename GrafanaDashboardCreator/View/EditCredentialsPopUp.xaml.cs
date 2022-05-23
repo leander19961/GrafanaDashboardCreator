@@ -20,6 +20,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class EditCredentialsPopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool _buttonPressed = false;
 
         public bool ButtonPressed { get { return _buttonPressed; } }
@@ -46,6 +47,7 @@ namespace GrafanaDashboardCreator.View
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 EditPropertiesButton_OnClick(sender, e);

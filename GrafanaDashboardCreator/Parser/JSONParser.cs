@@ -19,6 +19,7 @@ namespace GrafanaDashboardCreator.Parser
     {
         internal static JObject CreateNewDashboardJSON(Dashboard dashboard)
         {
+            //Creates a new json-text for the given dashboard
             int id = 1;
             int gridIncrementForX = 0;
             int gridIncrementForY = 1;
@@ -283,6 +284,7 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static JObject CreateFolderUploadJSON(Dashboard dashboard)
         {
+            //Creates a new json-text for the given dashboard that can be posted to Grafana via REST
             JObject folderJSON = null;
 
             try
@@ -326,6 +328,9 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static string GetTemplate(string templateTitle, string pathToJSON, bool replaceNodeID, bool replaceResourceID)
         {
+            //Parses a template with the given title from the given json file
+            //If "replaceNodeID" or "replaceResourceID" then the corresponding 
+            //properties are not set to "null" in the created template
             string inputJSONString;
             string path = pathToJSON.Replace("\"", String.Empty);
             using (StreamReader r = new StreamReader(pathToJSON.Replace("\"", String.Empty)))
@@ -455,19 +460,23 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static List<Folder> GetFolders(string json)
         {
+            //Parses the available Grafana folders out of the given json-text
             List<Folder> folders = new List<Folder>();
 
             try
             {
                 JArray foldersJson = JArray.Parse(json);
 
+                //Main node in the given json
                 foreach (JObject folder in foldersJson.Children())
                 {
+                    //Single folder
                     string title = "";
                     string id = "";
                     string uid = "";
                     foreach (JProperty folder_property in folder.Properties())
                     {
+                        //Properties of the current selected folder
                         if (folder_property.Name.Equals(JSONFolderTitlePropertyName))
                         {
                             title = folder_property.Value.ToString();

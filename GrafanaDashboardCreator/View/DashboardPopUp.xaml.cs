@@ -21,6 +21,7 @@ namespace GrafanaDashboardCreator.View
     {
         public string EnteredText { get { return DashboardNameBox.Text; } }
 
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
@@ -39,6 +40,7 @@ namespace GrafanaDashboardCreator.View
 
         private void DashboardNameBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 CreateDashboardButton_OnClick(sender, e);

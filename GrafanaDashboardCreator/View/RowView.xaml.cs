@@ -20,6 +20,8 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class RowView : Page
     {
+        //Thats no window! Its a page that bring all needed view elements to render a row with its
+        //datasources in the dashboardview, gets added to the content of the tabitem of the dashboard
         public RowView()
         {
             InitializeComponent();

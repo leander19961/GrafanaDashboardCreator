@@ -1,5 +1,4 @@
 ﻿using GrafanaDashboardCreator.Parser;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +11,17 @@ using System.Windows.Controls;
 using static GrafanaDashboardCreator.Resource.SettingsIO;
 using static GrafanaDashboardCreator.Resource.Constants;
 using GrafanaDashboardCreator.Net;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace GrafanaDashboardCreator.Model
 {
     public class ModelService
     {
+        //The modelservice is an "internal API" for editing the datamodel
+        //Its job is to edit the model in that way, that every part of the programm works as intended
+
+        //The modelservice knows everyone and saves the connections in some hidden properties
         private List<Row> rows;
         private List<Dashboard> dashboards;
         private List<Datasource> datasources;
@@ -34,9 +39,12 @@ namespace GrafanaDashboardCreator.Model
             standardFolder = new Folder("General", null, null);
         }
 
-        public ObservableList<Dashboard> GetDashboards()
+        //ObservableCollection is a list-type that is better to track for view elements
+        //If there are made changes on the elements, than the list tells it to the view
+        public ObservableCollection<Dashboard> GetDashboards()
         {
-            ObservableList<Dashboard> _dashboards = new ObservableList<Dashboard>();
+            //Returns all dashboards as ObservableCollection
+            ObservableCollection<Dashboard> _dashboards = new ObservableCollection<Dashboard>();
 
             foreach (Dashboard dashboard in dashboards)
             {
@@ -46,9 +54,10 @@ namespace GrafanaDashboardCreator.Model
             return _dashboards;
         }
 
-        public ObservableList<Template> GetTemplates()
+        public ObservableCollection<Template> GetTemplates()
         {
-            ObservableList<Template> _templates = new ObservableList<Template>();
+            //Returns all templates as ObservableCollection
+            ObservableCollection<Template> _templates = new ObservableCollection<Template>();
 
             foreach (Template template in templates)
             {
@@ -58,9 +67,10 @@ namespace GrafanaDashboardCreator.Model
             return _templates;
         }
 
-        public ObservableList<Row> GetRows()
+        public ObservableCollection<Row> GetRows()
         {
-            ObservableList<Row> _rows = new ObservableList<Row>();
+            //Returns all rows as ObservableCollection
+            ObservableCollection<Row> _rows = new ObservableCollection<Row>();
 
             foreach (Row row in rows)
             {
@@ -70,40 +80,10 @@ namespace GrafanaDashboardCreator.Model
             return _rows;
         }
 
-        public Node GetNodeByID(string nodeid)
+        public ObservableCollection<Datasource> GetDatasources()
         {
-            foreach (Node node in nodes)
-            {
-                if (node.NodeID == nodeid) { return node; }
-            }
-
-            return null;
-        }
-
-        internal Node GetNodeByName(string nodeName)
-        {
-            foreach (Node node in nodes)
-            {
-                if ((node.NodeForeignSource + ":" + node.NodeForeignID) == nodeName) { return node; }
-            }
-
-            return null;
-        }
-
-        internal Node GetSpecificNodeByName(string label, string nodeName, string nodeID)
-        {
-            foreach (Node node in nodes)
-            {
-                if (node.NodeID == nodeID) { return node; }
-            }
-
-            string[] foreignDetails = nodeName.Split(':');
-            return CreateNode(label, nodeID, foreignDetails[1], foreignDetails[0]);
-        }
-
-        public ObservableList<Datasource> GetDatasources()
-        {
-            ObservableList<Datasource> datasourceList = new ObservableList<Datasource>();
+            //Returns all datasources as ObservableCollection
+            ObservableCollection<Datasource> datasourceList = new ObservableCollection<Datasource>();
 
             foreach (Datasource datasource in datasources)
             {
@@ -113,9 +93,10 @@ namespace GrafanaDashboardCreator.Model
             return datasourceList;
         }
 
-        public ObservableList<Node> GetNodes()
+        public ObservableCollection<Node> GetNodes()
         {
-            ObservableList<Node> nodeList = new ObservableList<Node>();
+            //Returns all nodes as ObservableCollection
+            ObservableCollection<Node> nodeList = new ObservableCollection<Node>();
 
             foreach (Node node in nodes)
             {
@@ -125,9 +106,10 @@ namespace GrafanaDashboardCreator.Model
             return nodeList;
         }
 
-        public ObservableList<Credentials> GetCredentials()
+        public ObservableCollection<Credentials> GetCredentials()
         {
-            ObservableList<Credentials> credentialList = new ObservableList<Credentials>();
+            //Returns all credentials as ObservableCollection
+            ObservableCollection<Credentials> credentialList = new ObservableCollection<Credentials>();
 
             Dictionary<string, string> openNMSCredentials = XMLParser.GetOpenNMSCredentials();
             Dictionary<string, string> grafanaCredentials = XMLParser.GetGrafanaCredentials();
@@ -138,8 +120,21 @@ namespace GrafanaDashboardCreator.Model
             return credentialList;
         }
 
+        internal Node GetSpecificNode(string label, string nodeName, string nodeID)
+        {
+            //Check if a node with the given data already exists, else create it
+            foreach (Node node in nodes)
+            {
+                if (node.NodeID == nodeID) { return node; }
+            }
+
+            string[] foreignDetails = nodeName.Split(':');
+            return CreateNode(label, nodeID, foreignDetails[1], foreignDetails[0]);
+        }
+
         public Dashboard CreateDashboard(string name, TabItem tabItem, TabControl tabControl)
         {
+            //Creates a new dashboard in the datamodel
             Dashboard newDashBoard = new Dashboard(name, tabItem, tabControl, standardFolder);
 
             dashboards.Add(newDashBoard);
@@ -149,6 +144,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Node CreateNode(string label, string nodeID, string nodeForeignID, string nodeForeignSource)
         {
+            //Creates a new node in the datamodel
             foreach (Node node in nodes)
             {
                 if (node.NodeForeignID == nodeForeignID && node.NodeForeignSource == nodeForeignSource)
@@ -166,6 +162,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Row CreateRow(string name, TabItem tabItem, ListView listView)
         {
+            //Creates a new row in the datamodel
             Row newRow = new Row(name, tabItem, listView);
 
             rows.Add(newRow);
@@ -175,6 +172,7 @@ namespace GrafanaDashboardCreator.Model
 
         public void CreateDatasource(string name, string resourceID, Node node)
         {
+            //Creates a new datasource in the datamodel
             Datasource newDatasource = new Datasource(name, resourceID, node);
             foreach (Datasource datasource in datasources)
             {
@@ -186,8 +184,29 @@ namespace GrafanaDashboardCreator.Model
             datasources.Add(newDatasource);
         }
 
+        public void CreateTemplate(string templateName, string templateTitle, string pathToJSON, bool replaceNodeID, bool replaceResourceID)
+        {
+            //Creates a new template in the datamodel
+            string result = JSONParser.GetTemplate(templateTitle, pathToJSON, replaceNodeID, replaceResourceID);
+            Template template = new Template(templateName, result, replaceNodeID, replaceResourceID);
+
+            templates.Add(template);
+            SaveTempalte(template);
+        }
+
+        internal void ReCreateTemplate(Template template, string templateName, string jSONtext, bool replaceNodeID, bool replaceResourceID)
+        {
+            //For editing a template
+            Template newTemplate = new Template(templateName, jSONtext, replaceNodeID, replaceResourceID);
+
+            RemoveTemplate(template);
+            templates.Add(newTemplate);
+            SaveTempalte(newTemplate);
+        }
+
         internal void EditCredentialProperties(Credentials credentials, string username, string password, string token, string url)
         {
+            //For editding the credentials
             credentials.Username = username;
             credentials.Password = password;
             credentials.Token = token;
@@ -205,39 +224,14 @@ namespace GrafanaDashboardCreator.Model
 
         public void SortDataSources()
         {
+            //For better order in view
             datasources = datasources.OrderBy(x => x.ResourceID).ToList();
             datasources = datasources.OrderBy(x => x.NodeID).ToList();
         }
 
-        public void CreateTemplate(string templateName, string templateTitle, string pathToJSON, bool replaceNodeID, bool replaceResourceID)
-        {
-            string result = JSONParser.GetTemplate(templateTitle, pathToJSON, replaceNodeID, replaceResourceID);
-            Template template = new Template(templateName, result, replaceNodeID, replaceResourceID);
-
-            templates.Add(template);
-            SaveTempalte(template);
-        }
-
-        internal void ReCreateTemplate(string templateName, string jSONtext, bool replaceNodeID, bool replaceResourceID)
-        {
-            Template template = new Template(templateName, jSONtext, replaceNodeID, replaceResourceID);
-
-            templates.Add(template);
-            SaveTempalte(template);
-        }
-
-        public Dashboard CheckForDashboard(string name)
-        {
-            foreach (Dashboard dashboard in dashboards)
-            {
-                if (dashboard.Name == name) { return dashboard; }
-            }
-
-            return null;
-        }
-
         public Dashboard GetDashboardByTabItem(TabItem selectedTab)
         {
+            //Get the dashboard that is connected to a specific view element
             foreach (Dashboard dashboard in dashboards)
             {
                 if (dashboard.LinkedTabItem == selectedTab) { return dashboard; }
@@ -248,6 +242,7 @@ namespace GrafanaDashboardCreator.Model
 
         public Row GetRowByTabItem(TabItem selectedRowTabItem)
         {
+            //Get the row that is connected to a specific view element
             foreach (Row row in rows)
             {
                 if (row.LinkedTabItem == selectedRowTabItem) { return row; }
@@ -258,6 +253,7 @@ namespace GrafanaDashboardCreator.Model
 
         public void RemoveDashboard(Dashboard dashboard)
         {
+            //Removes the given dashboard
             while (dashboard.GetRows().Count > 0)
             {
                 Row row = dashboard.GetRows().Last();
@@ -270,45 +266,63 @@ namespace GrafanaDashboardCreator.Model
 
         public void RemoveRow(Row row)
         {
+            //Removes the given row
             row.RemoveYou();
             rows.Remove(row);
             row = null;
         }
 
-        public void RemoveDataSourceFromRow(Datasource datasource)
+        public void RemoveDataSource(Datasource datasource)
         {
+            //Removes the given datasource from the available datasources
             datasources.Remove(datasource);
+
+            foreach (Row row in rows)
+            {
+                RemoveDatasourceFromRow(row, datasource);
+            }
         }
 
         public void RemoveDatasourceFromRow(Row row, Datasource datasource)
         {
+            //Removes the given datasource from the given row
             row.WithoutDatasources(datasource);
         }
 
         public void RemoveTemplate(Template template)
         {
+            //Removes the given template
             template.RemoveYou();
             templates.Remove(template);
 
             try
             {
-                File.Delete(PanelTemplateDirectory + "\\" + template.Name + ".xml");
+                File.Delete(PanelTemplateDirectory + $"\\{template.Name}.xml");
             }
-            catch { } //TODO
+            catch
+            {
+                string title = "Fileerror!";
+                string text = $"There was an error while saving {template.Name}.xml";
+                MessageBox.Show(text, title);
+            }
         }
 
         public void AddDataSourceToRow(Datasource datasource, Row row)
         {
+            //Adding a exact copy of the given datasource to the given row
             row.Datasources.Add(datasource.CopyYou());
         }
 
         public void SetTemplateForDatasource(Datasource datasource, Template template)
         {
+            //Sets the template for a given datasource
             datasource.Template = template;
         }
 
+        //Swap methods are for manual sorting
         public void SwapDatasourcesUp(Datasource datasource, Row row)
         {
+            //Moves the given datasource up in the list of the given row
             if (row.Datasources[0] == datasource)
             {
                 return;
@@ -329,6 +343,7 @@ namespace GrafanaDashboardCreator.Model
 
         public void SwapDatasourcesDown(Datasource datasource, Row row)
         {
+            //Moves the given datasource down in the list of the given row
             if (row.Datasources[row.Datasources.Count - 1] == datasource)
             {
                 return;
@@ -349,6 +364,7 @@ namespace GrafanaDashboardCreator.Model
 
         public void SwapRowsLeft(Row row, Dashboard dashboard)
         {
+            //Moves the given row up in the list of the given dashboard
             if (dashboard.GetRows()[1] == row || row.Name == "FreeSpace")
             {
                 return;
@@ -386,6 +402,7 @@ namespace GrafanaDashboardCreator.Model
 
         public void SwapRowsRight(Row row, Dashboard dashboard)
         {
+            //Moves the given row down in the list of the given dashboard
             if (dashboard.GetRows()[dashboard.GetRows().Count - 1] == row || row.Name == "FreeSpace")
             {
                 return;

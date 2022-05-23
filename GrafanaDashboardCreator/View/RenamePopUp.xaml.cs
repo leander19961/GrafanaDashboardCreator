@@ -19,6 +19,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class RenamePopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool _buttonpressed = false;
         
         public bool ButtonPressed { get { return _buttonpressed; } }
@@ -38,6 +39,7 @@ namespace GrafanaDashboardCreator.View
 
         private void NewNameBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 CreateDashboardButton_OnClick(sender, e);

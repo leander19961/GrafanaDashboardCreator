@@ -22,6 +22,7 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string GETNodesFromOpenNMS()
         {
+            //Creates a HttpWebRequest to GET-Request the nodes from OpenNMS
             string result = "";
 
             try
@@ -57,6 +58,7 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string GETResourcesFromOpenNMS(string nodeID)
         {
+            //Creates a HttpWebRequest to GET-Request the resources for the given node from OpenNMS
             string result = "";
 
             try
@@ -92,6 +94,7 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string GETFoldersFromGrafana()
         {
+            //Creates a HttpWebRequest to GET-Request the folders from Grafana
             string result = "";
 
             try
@@ -127,6 +130,8 @@ namespace GrafanaDashboardCreator.Net
         ///</summary>
         internal static string POSTJsonToGrafana(string json)
         {
+            //Creates a HttpWebRequest to POST-Request the given json to Grafana
+            //Note: The folder must be set in the json!
             string result = "";
 
             try

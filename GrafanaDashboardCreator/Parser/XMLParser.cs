@@ -16,16 +16,9 @@ namespace GrafanaDashboardCreator.Parser
 {
     internal static class XMLParser
     {
-        internal static XmlDocument GetXMLDocumentFromFile(string filepath)
-        {
-            XmlDocument resources = new XmlDocument();
-            resources.Load(filepath);
-
-            return resources;
-        }
-
         internal static void GetResourcesFromXML(ModelService modelService, string resourcesXML)
         {
+            //Parses the resources from the given xml-text
             try
             {
                 XmlDocument resources = new XmlDocument();
@@ -43,14 +36,15 @@ namespace GrafanaDashboardCreator.Parser
                 {
                     if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Node Data")
                     {
-
+                        //The "SNMP Node Data" rescource is a special resource
+                        //Can be later be used if needed, currently just for skipping this node
                     }
                     else
                     {
                         string label = resource.Attributes.GetNamedItem("label").Value;
                         string resourceID = resource.Attributes.GetNamedItem("id").Value.Split(seperators, 2)[1];
 
-                        modelService.CreateDatasource(label, resourceID, modelService.GetSpecificNodeByName(nodeLabel, nodeName, nodeID));
+                        modelService.CreateDatasource(label, resourceID, modelService.GetSpecificNode(nodeLabel, nodeName, nodeID));
                     }
                 }
 
@@ -63,48 +57,9 @@ namespace GrafanaDashboardCreator.Parser
             }
         }
 
-        internal static List<Datasource> GetResourcesFromXMLAutomation(string resourcesXML, Node node)
-        {
-            List<Datasource> result = new List<Datasource>();
-            try
-            {
-                XmlDocument resources = new XmlDocument();
-                resources.LoadXml(resourcesXML);
-                XmlNode XMLNode = resources.SelectSingleNode("resource");
-                XmlNode internalResources = XMLNode.SelectSingleNode("children");
-
-                char[] seperators = { '.' };
-
-                string nodeID = GetNodeID(internalResources);
-                string nodeName = XMLNode.Attributes.GetNamedItem("name").Value;
-                string nodeLabel = XMLNode.Attributes.GetNamedItem("label").Value;
-
-                foreach (XmlNode resource in internalResources.ChildNodes)
-                {
-                    if (resource.Attributes.GetNamedItem("typeLabel").Value == "SNMP Node Data")
-                    {
-
-                    }
-                    else
-                    {
-                        string label = resource.Attributes.GetNamedItem("label").Value;
-                        string resourceID = resource.Attributes.GetNamedItem("id").Value.Split(seperators, 2)[1];
-
-                        result.Add(new Datasource(label, resourceID, node));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error!");
-                MessageBox.Show(ex.StackTrace, "Error!");
-            }
-
-            return result;
-        }
-
         internal static void GetNodesFromXML(ModelService modelService, string nodesXML)
         {
+            //Parses the nodes from the given xml-text
             try
             {
                 XmlDocument nodes = new XmlDocument();
@@ -128,36 +83,11 @@ namespace GrafanaDashboardCreator.Parser
             }
         }
 
-        internal static List<Node> GetNodesFromXMLAutomation(string nodesXML)
-        {
-            List<Node> result = new List<Node>();
-            try
-            {
-                XmlDocument nodes = new XmlDocument();
-                nodes.LoadXml(nodesXML);
-                XmlNode internalNodes = nodes.SelectSingleNode("nodes");
-
-                foreach (XmlNode node in internalNodes.ChildNodes)
-                {
-                    string label = node.Attributes.GetNamedItem("label").Value;
-                    string nodeID = node.Attributes.GetNamedItem("id").Value;
-                    string nodeForeignID = node.Attributes.GetNamedItem("foreignId").Value;
-                    string nodeForeignSource = node.Attributes.GetNamedItem("foreignSource").Value;
-
-                    result.Add(new Node(label, nodeID, nodeForeignID, nodeForeignSource));
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error!");
-                MessageBox.Show(ex.StackTrace, "Error!");
-            }
-
-            return result;
-        }
-
         internal static string GetNodeID(XmlNode resources)
         {
+            //Parses the node id for the given resources
+            //Its not an attribute, its stored in each resource, so 
+            //its needed to parse it this way
             try
             {
                 foreach (XmlNode resource in resources.ChildNodes)
@@ -187,6 +117,7 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static Dictionary<string, string> GetOpenNMSCredentials()
         {
+            //Parses the credentials for OpenNMS stored in the xml file
             XmlDocument openNMSCredentialsXml = new XmlDocument();
             openNMSCredentialsXml.Load(OpenNMSCredentailsFilePath);
             XmlNode credentials = openNMSCredentialsXml.SelectSingleNode(OpenNMSCredentailsXmlNode);
@@ -202,6 +133,7 @@ namespace GrafanaDashboardCreator.Parser
 
         internal static Dictionary<string, string> GetGrafanaCredentials()
         {
+            //Parses the credentials for Grafana stored in the xml file
             XmlDocument openNMSCredentialsXml = new XmlDocument();
             openNMSCredentialsXml.Load(GrafanaCredentailsFilePath);
             XmlNode credentials = openNMSCredentialsXml.SelectSingleNode(GrafanaCredentailsXmlNode);

@@ -22,6 +22,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class SelectGrafanaFolderPopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool _buttonPressed = false;
 
         public bool ButtonPressed { get { return _buttonPressed; } }

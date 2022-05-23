@@ -17,6 +17,10 @@ namespace GrafanaDashboardCreator.Resource
 {
     internal static class SettingsIO
     {
+        //Checks if all needed folders and files are existing
+        //If not then it creates the folders and fills the files
+        //with minimal data, else the program could crash if
+        //it tries to access a folder/file that does not exist
         internal static void CheckForFileSystem()
         {
             if (!Directory.Exists(DataStoreDirectory))
@@ -76,6 +80,7 @@ namespace GrafanaDashboardCreator.Resource
 
         internal static void SaveTempalte(Template template)
         {
+            //Saves the given template in a xml file
             XmlDocument templateXml = new XmlDocument();
 
             XmlNode templateNode = templateXml.CreateElement("Template");
@@ -109,6 +114,7 @@ namespace GrafanaDashboardCreator.Resource
 
         internal static List<Template> LoadTemplates()
         {
+            //Load all templates from existing xml files in the template folder
             List<Template> templates = new List<Template>();
 
             foreach (string file in Directory.GetFiles(PanelTemplateDirectory))
@@ -123,11 +129,14 @@ namespace GrafanaDashboardCreator.Resource
             return templates;
         }
 
-        internal static Template LoadTemplate(string path)
+        private static Template LoadTemplate(string path)
         {
+            //Loads a template from the given path
             try
             {
-                XmlDocument templateXml = XMLParser.GetXMLDocumentFromFile(path);
+                XmlDocument templateXml = new XmlDocument();
+                templateXml.Load(path);
+
                 XmlNode xmlNode = templateXml.DocumentElement;
 
                 string name = xmlNode.Attributes.GetNamedItem("Name").Value;

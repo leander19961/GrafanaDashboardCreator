@@ -1,7 +1,7 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +21,14 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class SelectNodePopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
 
         public Node SelectedNode { get { return NodeSlectBox.SelectedItem as Node; } }
 
-        public SelectNodePopUp(ObservableList<Node> nodes)
+        public SelectNodePopUp(ObservableCollection<Node> nodes)
         {
             InitializeComponent();
             NodeSlectBox.ItemsSource = nodes;

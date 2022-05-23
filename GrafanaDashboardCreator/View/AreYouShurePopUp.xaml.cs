@@ -19,6 +19,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class AreYouShurePopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }

@@ -24,6 +24,7 @@ namespace GrafanaDashboardCreator.View
     {
         private ModelService modelservice;
 
+        //View for selecting a folder and then REST-POST the selected dashboards to this folder
         public GrafanaPOSTView(ModelService modelservice)
         {
             InitializeComponent();

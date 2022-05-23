@@ -1,7 +1,7 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +21,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class AddToDashboardPopUp : Window
     {
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
@@ -28,7 +29,7 @@ namespace GrafanaDashboardCreator.View
         public Dashboard SelectedDashboard { get { return DashboardSelectBox.SelectedItem as Dashboard; } }
         public Row SelectedRow { get { return RowSelectBox.SelectedItem as Row; } }
 
-        public AddToDashboardPopUp(ObservableList<Dashboard> dashboards)
+        public AddToDashboardPopUp(ObservableCollection<Dashboard> dashboards)
         {
             InitializeComponent();
             DashboardSelectBox.ItemsSource = dashboards;
@@ -42,6 +43,7 @@ namespace GrafanaDashboardCreator.View
 
         private void DashboardSelectBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Loads the rows of the current selected dashboard
             RowSelectBox.SelectedItem = null;
             RowSelectBox.ItemsSource = null;
             RowSelectBox.ItemsSource = (DashboardSelectBox.SelectedItem as Dashboard).GetRows();

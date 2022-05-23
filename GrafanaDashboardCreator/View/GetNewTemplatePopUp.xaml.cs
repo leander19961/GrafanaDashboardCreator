@@ -25,6 +25,7 @@ namespace GrafanaDashboardCreator.View
         public bool ReplaceNodeID { get { return (bool)ReplaceNodeIDCheckBox.IsChecked; } }
         public bool ReplaceResourceID { get { return (bool)ReplaceResourceIDCheckBox.IsChecked; } }
 
+        //Button pressed is for checking if the window was closed without pressing the "Confirm" button
         private bool buttonPressed = false;
 
         public bool ButtonPressed { get { return buttonPressed; } }
@@ -42,6 +43,7 @@ namespace GrafanaDashboardCreator.View
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
+            //For accepting "Return" as "confirmation"
             if (e.Key == Key.Return)
             {
                 CreateDashboardButton_OnClick(sender, e);

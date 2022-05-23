@@ -1,7 +1,7 @@
 ﻿using GrafanaDashboardCreator.Model;
-using HandlebarsDotNet.Collections;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +32,10 @@ namespace GrafanaDashboardCreator.View
 
         private void SetListViewItemsSource()
         {
+            //Add all relevant items to the view, so the user can see them
+            //Items gets ordered for better view
             List<Row> list = new List<Row>();
-            ObservableList<Row> rows = modelService.GetRows();
+            ObservableCollection<Row> rows = modelService.GetRows();
 
             foreach (Row row in rows)
             {

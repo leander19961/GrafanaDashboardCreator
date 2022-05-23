@@ -22,6 +22,7 @@ namespace GrafanaDashboardCreator.View
     {
         ModelService modelService;
 
+        //View for adding, deleting and editing templates
         public TemplateViewer(ModelService modelService)
         {
             InitializeComponent();
@@ -60,8 +61,7 @@ namespace GrafanaDashboardCreator.View
                     return;
                 }
 
-                modelService.ReCreateTemplate(popUp.EnteredText, template.JSONtext, template.ReplaceNodeID, template.ReplaceResourceID);
-                modelService.RemoveTemplate(template);
+                modelService.ReCreateTemplate(template, popUp.EnteredText, template.JSONtext, template.ReplaceNodeID, template.ReplaceResourceID);
                 TemplateListView.ItemsSource = modelService.GetTemplates();
                 TemplateListView.Items.Refresh();
             }

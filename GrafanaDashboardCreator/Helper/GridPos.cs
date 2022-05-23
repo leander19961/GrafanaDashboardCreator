@@ -8,6 +8,7 @@ namespace GrafanaDashboardCreator.Helper
 {
     internal class GridPos
     {
+        //This is for positioning of panels and rows
         private int x = 0;
         private int y = 0;
 

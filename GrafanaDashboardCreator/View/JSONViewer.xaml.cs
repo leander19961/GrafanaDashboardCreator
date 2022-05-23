@@ -20,6 +20,7 @@ namespace GrafanaDashboardCreator.View
     /// </summary>
     public partial class JSONViewer : Window
     {
+        //Just for viewing text
         public JSONViewer(string jsonText)
         {
             InitializeComponent();

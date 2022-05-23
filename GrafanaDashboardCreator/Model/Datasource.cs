@@ -11,12 +11,14 @@ namespace GrafanaDashboardCreator.Model
 {
     public class Datasource : INotifyPropertyChanged
     {
+        //Hidden properties of the Datasource-Class
         private readonly string _label;
         private readonly string _resourceID;
 
         private Node _node;
         private Template _template;
 
+        //Public properties of the Datasource-Class
         public string Label { get => _label; }
         public string ResourceID { get { return _resourceID; } }
         public string NodeID { get { return _node.NodeForeignSource + ':' + _node.NodeForeignID; } }
@@ -47,6 +49,7 @@ namespace GrafanaDashboardCreator.Model
             }
         }
 
+        //Constructor of the Datasource-Class
         public Datasource(string label, string resourceID, Node node)
         {
             _label = label;
@@ -54,13 +57,19 @@ namespace GrafanaDashboardCreator.Model
             _node = node;
         }
 
+        //Referential integrity for the Datasource-Class
         public Datasource setRow(Row value)
         {
+            //Set a single connection
+
+            //Check if the given value is null
+            //If you want to "delte" a connection
             if (this._row == value)
             {
                 return this;
             }
 
+            //Set the new value and tell the old value that it is no longer connected
             Row oldValue = this._row;
             if (this._row != null)
             {
@@ -77,11 +86,16 @@ namespace GrafanaDashboardCreator.Model
 
         public Datasource setNode(Node value)
         {
+            //Set a single connection
+
+            //Check if the given value is null
+            //If you want to "delte" a connection
             if (this._node == value)
             {
                 return this;
             }
 
+            //Set the new value and tell the old value that it is no longer connected
             Node oldValue = this._node;
             if (this._node != null)
             {
@@ -98,12 +112,15 @@ namespace GrafanaDashboardCreator.Model
 
         internal Datasource CopyYou()
         {
+            //Returns a new datasource that is an exact clone
             return new Datasource(_label, _resourceID, _node);
         }
 
         override
         public string ToString()
         {
+            //ToString() gets called if the view tries to "render" an object
+            //and dont know how to handle it
             return _label;
         }
     }
