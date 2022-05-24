@@ -34,12 +34,16 @@ namespace GrafanaDashboardCreator.View
 
         private void SelectFolderButton_OnCLick(object sender, RoutedEventArgs e)
         {
+            //Sets the folder for the selected dashboards
+
+            //First wait for the user to select a folder
             SelectGrafanaFolderPopUp folderPopUp = new SelectGrafanaFolderPopUp()
             {
                 Owner = this
             };
             folderPopUp.ShowDialog();
 
+            //Confirmation check
             if (!folderPopUp.ButtonPressed)
             {
                 return;
@@ -47,19 +51,32 @@ namespace GrafanaDashboardCreator.View
 
             Folder folder = folderPopUp.SelectedFolder;
 
+            //Check the user input
+            if (folder == null)
+            {
+                string title = "No folder selected!";
+                string text = "You need to select a folder!";
+                MessageBox.Show(text, title);
+                return;
+            }
+
+            //Set folders
             foreach (Dashboard dashboard in DashboardListView.SelectedItems)
             {
                 dashboard.Folder = folder;
             }
 
+            //Refresh view
             DashboardListView.ItemsSource = modelservice.GetDashboards();
             DashboardListView.Items.Refresh();
         }
 
         private void UploadDashboardsButton_OnClick(object sender, RoutedEventArgs e)
         {
+            //Uploads selected dashboards to Grafana
             try
             {
+                //Check if all datasources of the selected dashboards have tempalates
                 bool noTemplatefound = false;
                 foreach (Dashboard dashboard in DashboardListView.SelectedItems)
                 {
@@ -81,6 +98,7 @@ namespace GrafanaDashboardCreator.View
                     return;
                 }
 
+                //Upload selected dashboards
                 foreach (Dashboard dashboard in DashboardListView.SelectedItems)
                 {
                     string uploadString = JSONParser.CreateFolderUploadJSON(dashboard).ToString();
