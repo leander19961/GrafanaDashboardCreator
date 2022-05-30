@@ -3,6 +3,12 @@ using GrafanaDashboardCreator.Net;
 using GrafanaDashboardCreator.Parser;
 using GrafanaDashboardCreator.Resource;
 using GrafanaDashboardCreator.View;
+using GrafanaDashboardCreator.View.CredentialsView;
+using GrafanaDashboardCreator.View.EditDashboardsView;
+using GrafanaDashboardCreator.View.GrafanaPOSTView;
+using GrafanaDashboardCreator.View.ModelView;
+using GrafanaDashboardCreator.View.PopUps;
+using GrafanaDashboardCreator.View.TemplateView;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -377,7 +383,7 @@ namespace GrafanaDashboardCreator
         private void PostDashboardsButton_OnClick(object sender, RoutedEventArgs e)
         {
             //Opens a window for REST-POST dashboards to Grafana
-            GrafanaPOSTView view = new GrafanaPOSTView(modelService)
+            GrafanaPOSTViewer view = new GrafanaPOSTViewer(modelService)
             {
                 Owner = this
             };
@@ -634,7 +640,7 @@ namespace GrafanaDashboardCreator
         private void EditDashboardsButton_OnClick(object sender, RoutedEventArgs e)
         {
             //Opens a window for edit or delte rows/dashboards
-            EditDashboardsView view = new EditDashboardsView(modelService)
+            EditDashboardsViewer view = new EditDashboardsViewer(modelService)
             {
                 Owner = this
             };

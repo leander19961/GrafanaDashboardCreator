@@ -99,61 +99,61 @@
     <Compile Include="Net\RESTAPI.cs" />
     <Compile Include="Resource\Constants.cs" />
     <Compile Include="Resource\SettingsIO.cs" />
-    <Compile Include="View\AddSpecialDatasourcePopUp.xaml.cs">
-      <DependentUpon>AddSpecialDatasourcePopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AddToDashboardPopUp.xaml.cs">
-      <DependentUpon>AddToDashboardPopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AreYouShurePopUp.xaml.cs">
-      <DependentUpon>AreYouShurePopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\CredentialsViewer.xaml.cs">
+    <Compile Include="View\CredentialsView\CredentialsViewer.xaml.cs">
       <DependentUpon>CredentialsViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DashboardPopUp.xaml.cs">
-      <DependentUpon>DashboardPopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DashboardView.xaml.cs">
-      <DependentUpon>DashboardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\EditCredentialsPopUp.xaml.cs">
+    <Compile Include="View\CredentialsView\EditCredentialsPopUp.xaml.cs">
       <DependentUpon>EditCredentialsPopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EditDashboardsView.xaml.cs">
-      <DependentUpon>EditDashboardsView.xaml</DependentUpon>
+    <Compile Include="View\EditDashboardsView\EditDashboardsViewer.xaml.cs">
+      <DependentUpon>EditDashboardsViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GetNewTemplatePopUp.xaml.cs">
-      <DependentUpon>GetNewTemplatePopUp.xaml</DependentUpon>
+    <Compile Include="View\GrafanaPOSTView\GrafanaPOSTViewer.xaml.cs">
+      <DependentUpon>GrafanaPOSTViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GrafanaPOSTView.xaml.cs">
-      <DependentUpon>GrafanaPOSTView.xaml</DependentUpon>
+    <Compile Include="View\GrafanaPOSTView\SelectGrafanaFolderPopUp.xaml.cs">
+      <DependentUpon>SelectGrafanaFolderPopUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\JSONViewer.xaml.cs">
       <DependentUpon>JSONViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RenamePopUp.xaml.cs">
-      <DependentUpon>RenamePopUp.xaml</DependentUpon>
+    <Compile Include="View\ModelView\DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RowPopUp.xaml.cs">
-      <DependentUpon>RowPopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\RowView.xaml.cs">
+    <Compile Include="View\ModelView\RowView.xaml.cs">
       <DependentUpon>RowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SelectDashboardPopUp.xaml.cs">
+    <Compile Include="View\PopUps\AddSpecialDatasourcePopUp.xaml.cs">
+      <DependentUpon>AddSpecialDatasourcePopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\AddToDashboardPopUp.xaml.cs">
+      <DependentUpon>AddToDashboardPopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\AreYouShurePopUp.xaml.cs">
+      <DependentUpon>AreYouShurePopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\DashboardPopUp.xaml.cs">
+      <DependentUpon>DashboardPopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\RenamePopUp.xaml.cs">
+      <DependentUpon>RenamePopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\RowPopUp.xaml.cs">
+      <DependentUpon>RowPopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PopUps\SelectDashboardPopUp.xaml.cs">
       <DependentUpon>SelectDashboardPopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SelectGrafanaFolderPopUp.xaml.cs">
-      <DependentUpon>SelectGrafanaFolderPopUp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SelectNodePopUp.xaml.cs">
+    <Compile Include="View\PopUps\SelectNodePopUp.xaml.cs">
       <DependentUpon>SelectNodePopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SetTemplatePopUp.xaml.cs">
+    <Compile Include="View\PopUps\SetTemplatePopUp.xaml.cs">
       <DependentUpon>SetTemplatePopUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TemplateViewer.xaml.cs">
+    <Compile Include="View\TemplateView\GetNewTemplatePopUp.xaml.cs">
+      <DependentUpon>GetNewTemplatePopUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TemplateView\TemplateViewer.xaml.cs">
       <DependentUpon>TemplateViewer.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -168,43 +168,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\AddSpecialDatasourcePopUp.xaml">
+    <Page Include="View\CredentialsView\CredentialsViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AddToDashboardPopUp.xaml">
+    <Page Include="View\CredentialsView\EditCredentialsPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AreYouShurePopUp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\CredentialsViewer.xaml">
+    <Page Include="View\EditDashboardsView\EditDashboardsViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DashboardPopUp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\DashboardView.xaml">
+    <Page Include="View\GrafanaPOSTView\GrafanaPOSTViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EditCredentialsPopUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\EditDashboardsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\GetNewTemplatePopUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\GrafanaPOSTView.xaml">
+    <Page Include="View\GrafanaPOSTView\SelectGrafanaFolderPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,35 +192,55 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RenamePopUp.xaml">
+    <Page Include="View\ModelView\DashboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RowPopUp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\RowView.xaml">
+    <Page Include="View\ModelView\RowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SelectDashboardPopUp.xaml">
+    <Page Include="View\PopUps\AddSpecialDatasourcePopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SelectGrafanaFolderPopUp.xaml">
+    <Page Include="View\PopUps\AddToDashboardPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SelectNodePopUp.xaml">
+    <Page Include="View\PopUps\AreYouShurePopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SetTemplatePopUp.xaml">
+    <Page Include="View\PopUps\DashboardPopUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TemplateViewer.xaml">
+    <Page Include="View\PopUps\RenamePopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopUps\RowPopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopUps\SelectDashboardPopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopUps\SelectNodePopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopUps\SetTemplatePopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TemplateView\GetNewTemplatePopUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TemplateView\TemplateViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

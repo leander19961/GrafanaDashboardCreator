@@ -1,0 +1,14 @@
+﻿<Window x:Class="GrafanaDashboardCreator.View.PopUps.AreYouShurePopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafanaDashboardCreator.View.PopUps"
+        mc:Ignorable="d"
+        Title="AreYouShurePopUp" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
+    <Grid>
+        <Label x:Name="MessageLabel" Content="Are you shure about?" HorizontalAlignment="Center" Margin="0,0,0,50" VerticalAlignment="Center"/>
+        <Button Content="Continue" HorizontalAlignment="Center" Margin="0,50,100,0" VerticalAlignment="Center" Width="60" Click="ContinueButton_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Center" Margin="100,50,0,0" VerticalAlignment="Center" Width="60" Click="CancelButton_Click"/>
+    </Grid>
+</Window>

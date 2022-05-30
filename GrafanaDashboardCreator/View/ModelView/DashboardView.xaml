@@ -1,0 +1,28 @@
+﻿<Page x:Class="GrafanaDashboardCreator.View.ModelView.DashboardView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GrafanaDashboardCreator.View.ModelView"
+      mc:Ignorable="d" 
+      d:DesignHeight="526.08" d:DesignWidth="1274"
+      Title="DashboardView">
+
+    <TabControl x:Name="DashboardTabControl">
+        <TabItem x:Name="FreeSpaceRow" Header="Free space">
+            <Grid>
+                <ListView x:Name="FreeSpaceRowListView">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Label" Width="300" DisplayMemberBinding="{Binding Label}"/>
+                            <GridViewColumn Header="Node" Width="200" DisplayMemberBinding="{Binding Node}"/>
+                            <GridViewColumn Header="ResourceID" Width="300" DisplayMemberBinding="{Binding ResourceID}"/>
+                            <GridViewColumn Header="NodeID" Width="300" DisplayMemberBinding="{Binding NodeID}"/>
+                            <GridViewColumn Header="Template" Width="140" DisplayMemberBinding="{Binding Template}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Page>

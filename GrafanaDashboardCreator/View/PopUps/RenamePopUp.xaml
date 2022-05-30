@@ -1,0 +1,14 @@
+﻿<Window x:Class="GrafanaDashboardCreator.View.PopUps.RenamePopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafanaDashboardCreator.View.PopUps"
+        mc:Ignorable="d"
+        Title="RenamePopUp" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <TextBox x:Name="NewNameBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="150" KeyDown="NewNameBox_KeyDown"/>
+        <Button Content="Rename" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Click="CreateDashboardButton_OnClick"/>
+        <Label Content="Enter a new name" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
